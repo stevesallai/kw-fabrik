@@ -1,0 +1,2213 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KW Fabrik</title>
+<meta name="description" content="Tägliches Training für Door2Door-Berater: Lektionen, Duelle, Pitch-Werkstatt und Karriereleiter.">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#0A1631">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KW Fabrik">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" href="./icons/icon-192.png" sizes="192x192">
+<style>
+*{box-sizing:border-box}
+html{color-scheme:dark}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<style>
+:root{
+  --bg:#0A1631; --surface:#122350; --surface-2:#182C61; --sunk:#081228;
+  --ink:#FFFFFF; --ink-2:#B9C6E4; --ink-3:#8496C4;
+  --accent:#F26A21; --accent-hi:#FF8A3D; --on-accent:#0A1631;
+  --ok:#3ED598; --warn:#FF6B6B; --line:#243A70;
+  --display:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --body:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --data:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --r:14px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--body); font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.stage{height:100%; display:flex; flex-direction:column; align-items:center}
+
+/* ---------- phone ---------- */
+.phone{
+  width:100%; max-width:480px; height:100%;
+  background:var(--bg); overflow:hidden; position:relative;
+  display:flex; flex-direction:column;
+}
+@media (min-width:520px){ .phone{border-left:1px solid var(--line); border-right:1px solid var(--line)} }
+.screens{flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+  padding-top:env(safe-area-inset-top,0px); overscroll-behavior-y:contain}
+.screen{padding:18px 16px 24px; display:flex; flex-direction:column; gap:16px}
+.topline{display:flex; align-items:center; justify-content:space-between; gap:10px}
+h2.sh{font-family:var(--display); font-weight:800; font-size:21px; line-height:1.3; letter-spacing:-.01em; text-transform:uppercase; margin:0}
+h3.ch{font-family:var(--display); font-weight:700; font-size:14px; line-height:1.35; letter-spacing:.06em; text-transform:uppercase; margin:0; color:var(--ink-2)}
+p{margin:0}
+.muted{color:var(--ink-3); font-size:13px; line-height:1.6}
+
+/* ---------- pieces ---------- */
+.card{background:var(--surface); border-radius:var(--r); padding:15px; display:flex; flex-direction:column; gap:11px}
+.card.flat{background:none; border:1px solid var(--line)}
+.streakrow{display:flex; gap:10px}
+.stat{flex:1; background:var(--surface); border-radius:var(--r); padding:12px; display:flex; flex-direction:column; gap:3px}
+.stat .n{font-family:var(--display); font-weight:800; font-size:26px; line-height:1.15; font-variant-numeric:tabular-nums}
+.stat .l{font-family:var(--data); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.stat .n.acc{color:var(--accent-hi)}
+
+.btn{
+  font-family:var(--display); font-weight:700; font-size:14px; letter-spacing:.06em; text-transform:uppercase;
+  background:var(--accent); color:var(--on-accent); border:0; border-radius:11px;
+  padding:14px 16px; min-height:48px; cursor:pointer; width:100%; line-height:1.3;
+}
+.btn:hover{background:var(--accent-hi)}
+.btn.sec{background:var(--surface-2); color:var(--ink); }
+.btn.sec:hover{background:#1f3775}
+.btn:disabled{background:var(--surface-2); color:var(--ink-3); cursor:not-allowed}
+.btn-hint{font-size:12px; color:var(--ink-3); text-align:center; margin-top:-4px}
+
+.opt{
+  display:flex; flex-direction:column; align-items:stretch;
+  width:100%; text-align:left; font-family:var(--body); font-size:14.5px; line-height:1.5;
+  background:var(--surface); color:var(--ink); border:1.5px solid var(--line);
+  border-radius:11px; padding:13px 14px; min-height:48px; cursor:pointer;
+}
+.opthead{display:block}
+.opt:hover{border-color:var(--ink-3)}
+.opt[aria-pressed="true"]{border-color:var(--accent); background:var(--surface-2)}
+.opt.right{border-color:var(--ok); background:rgba(62,213,152,.12)}
+.opt.wrong{border-color:var(--warn); background:rgba(255,107,107,.12)}
+.opt .mark{font-family:var(--data); font-weight:700; margin-right:8px}
+.opt.right .mark{color:var(--ok)}
+.opt.wrong .mark{color:var(--warn)}
+.optwhy{
+  display:block; margin-top:9px; padding-top:9px; border-top:1px solid rgba(255,255,255,.09);
+  font-size:12.5px; line-height:1.55; color:var(--ink-2);
+}
+.optwhy b{
+  display:block; margin-bottom:3px; font-family:var(--data); font-size:9px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+}
+.opt.right .optwhy b{color:var(--ok)}
+.opt.wrong .optwhy b{color:var(--warn)}
+
+.bar{height:7px; background:var(--sunk); border-radius:99px; overflow:hidden}
+.bar > i{display:block; height:100%; background:var(--accent); border-radius:99px; transition:width .35s ease}
+.bar.ok > i{background:var(--ok)}
+.bar.warn > i{background:var(--warn)}
+
+.chip{font-family:var(--data); font-size:10px; letter-spacing:.09em; text-transform:uppercase; padding:5px 9px; border-radius:99px; background:var(--sunk); color:var(--ink-2); display:inline-block}
+.chip.ok{background:rgba(62,213,152,.16); color:var(--ok)}
+.chip.acc{background:rgba(242,106,33,.18); color:var(--accent-hi)}
+
+/* ---------- tabs ---------- */
+.tabs{
+  display:flex; background:var(--sunk); border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.tabs button{
+  flex:1; background:none; border:0; color:var(--ink-3); cursor:pointer;
+  padding:9px 2px 11px; min-height:56px; display:flex; flex-direction:column; align-items:center; gap:4px;
+  font-family:var(--data); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase;
+}
+.tabs button svg{width:21px; height:21px; display:block}
+.tabs button[aria-current="true"]{color:var(--accent-hi)}
+
+/* ---------- path ---------- */
+.path{display:flex; flex-direction:column; gap:0}
+.node{display:flex; gap:13px; align-items:flex-start}
+.rail{display:flex; flex-direction:column; align-items:center; width:42px; flex:none}
+.dot{
+  width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
+  font-family:var(--display); font-weight:800; font-size:15px; flex:none;
+  background:var(--surface-2); color:var(--ink-3); border:2px solid var(--line);
+}
+.dot.done{background:var(--ok); color:var(--on-accent); border-color:var(--ok)}
+.dot.now{background:var(--accent); color:var(--on-accent); border-color:var(--accent-hi)}
+.rail .ln{width:2px; flex:1; min-height:22px; background:var(--line)}
+.rail .ln.done{background:var(--ok)}
+.node .body{padding-bottom:16px; flex:1; min-width:0}
+.node .body b{font-family:var(--display); font-weight:700; font-size:15px; letter-spacing:.01em; display:block; line-height:1.35}
+
+/* ---------- rhino ---------- */
+.rhinobox{background:linear-gradient(170deg,var(--surface-2),var(--surface)); border-radius:var(--r); padding:16px; display:flex; flex-direction:column; gap:12px; align-items:center}
+.rhinobox svg{width:180px; max-width:100%; height:auto}
+.statline{display:flex; align-items:center; gap:10px}
+.statline .nm{font-family:var(--data); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); width:74px; flex:none}
+.statline .bar{flex:1}
+.statline .vl{font-family:var(--data); font-size:12px; color:var(--ink); width:26px; text-align:right; flex:none; font-variant-numeric:tabular-nums}
+
+/* ---------- ladder ---------- */
+.rung{display:flex; gap:11px; align-items:flex-start; padding:12px 0; border-top:1px solid var(--line)}
+.rung:first-child{border-top:0}
+.rung .num{font-family:var(--display); font-weight:800; font-size:13px; width:26px; height:26px; flex:none; display:grid; place-items:center; border-radius:7px; background:var(--surface-2); color:var(--ink-3)}
+.rung.hit .num{background:var(--ok); color:var(--on-accent)}
+.rung.next .num{background:var(--accent); color:var(--on-accent)}
+.rung b{font-family:var(--display); font-weight:700; font-size:14.5px; letter-spacing:.02em; text-transform:uppercase; display:block; line-height:1.35}
+.field{display:flex; align-items:center; gap:10px; justify-content:space-between}
+.field label{font-size:13.5px; color:var(--ink-2); flex:1}
+.field input{
+  font-family:var(--data); font-size:14px; width:96px; flex:none; text-align:right;
+  background:var(--sunk); color:var(--ink); border:1px solid var(--line);
+  border-radius:9px; padding:10px 11px; min-height:44px;
+}
+
+/* ---------- pitch ---------- */
+.block{border:1px solid var(--line); border-radius:11px; overflow:hidden}
+.block > button{
+  width:100%; text-align:left; background:var(--surface); border:0; color:var(--ink);
+  padding:12px 14px; min-height:48px; cursor:pointer; display:flex; justify-content:space-between; gap:10px; align-items:center;
+  font-family:var(--data); font-size:11px; letter-spacing:.09em; text-transform:uppercase;
+}
+.block .inner{padding:0 14px 13px; font-size:14px; line-height:1.6; color:var(--ink-2)}
+.block .tw{color:var(--ink-3); font-family:var(--data); font-size:14px}
+
+/* ---------- lesson overlay ---------- */
+.overlay{position:absolute; inset:0; background:var(--bg); display:flex; flex-direction:column; z-index:5}
+.obar{display:flex; align-items:center; gap:11px; padding:14px 16px 10px}
+.obar .x{background:none; border:0; color:var(--ink-3); font-size:24px; line-height:1; cursor:pointer; padding:6px 8px; min-width:44px; min-height:44px}
+.obody{flex:1; overflow-y:auto; padding:6px 16px 16px; display:flex; flex-direction:column; gap:14px}
+/* sonst stauchen die Kacheln unter ihre Inhaltshöhe und der Text läuft heraus */
+.obody > *{flex:0 0 auto}
+.screen > *{flex:0 0 auto}
+.ofoot{padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--line); display:flex; flex-direction:column; gap:7px}
+.prompt{font-family:var(--display); font-weight:700; font-size:17.5px; line-height:1.45; letter-spacing:-.005em}
+.quote{border-left:3px solid var(--accent); padding:9px 0 9px 12px; font-size:16px; line-height:1.5; font-style:italic; color:var(--ink)}
+.timer{display:flex; align-items:center; gap:9px}
+.timer .t{font-family:var(--data); font-size:12px; color:var(--ink-2); font-variant-numeric:tabular-nums; width:48px; flex:none; text-align:right; white-space:nowrap}
+.expl{background:var(--sunk); border-radius:11px; padding:13px; font-size:13.5px; line-height:1.6; color:var(--ink-2)}
+.expl b{color:var(--ink); font-family:var(--display); font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; display:block; margin-bottom:5px}
+
+.ordlist{display:flex; flex-direction:column; gap:8px}
+.ordhint{font-family:var(--data); font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); line-height:1.5}
+.ordhint.aktiv{color:var(--accent-hi)}
+/* Ganze Zeile ist der Knopf: ein Ziel, über 44px hoch, nichts Verschachteltes. */
+.ord{
+  display:flex; align-items:center; gap:11px; width:100%; text-align:left; cursor:pointer;
+  background:var(--surface); border:1.5px solid var(--line); color:var(--ink);
+  border-radius:12px; padding:12px 14px; min-height:58px;
+  font-family:var(--body); font-size:14.5px; line-height:1.4;
+  transition:border-color .15s ease, background .15s ease, transform .15s ease;
+}
+.ord:hover:not(:disabled){border-color:var(--ink-3)}
+.ord[aria-pressed="true"]{
+  border-color:var(--accent-hi); background:var(--surface-2);
+  box-shadow:0 10px 22px -12px rgba(0,0,0,.7);
+}
+.ord.ziel{border-style:dashed; border-color:var(--accent)}
+.ord.right{border-color:var(--ok)} .ord.wrong{border-color:var(--warn)}
+.ord:disabled{cursor:default}
+.ord .pos{
+  flex:none; width:28px; height:28px; display:grid; place-items:center; border-radius:8px;
+  background:var(--sunk); color:var(--ink-2); font-family:var(--data); font-weight:700; font-size:12.5px;
+}
+.ord[aria-pressed="true"] .pos{background:var(--accent); color:var(--on-accent)}
+.ord.right .pos{background:var(--ok); color:var(--on-accent)}
+.ord.wrong .pos{background:var(--warn); color:var(--on-accent)}
+.ord .lab{flex:1; min-width:0}
+
+/* ---------- sheet ---------- */
+.sheet{position:absolute; inset:0; background:rgba(4,10,24,.72); display:flex; align-items:flex-end; z-index:8}
+.sheet .inner{background:var(--surface); width:100%; border-radius:18px 18px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:11px}
+.shareopt{display:flex; align-items:center; gap:12px; width:100%; background:var(--sunk); border:1px solid var(--line); border-radius:11px; padding:12px 13px; min-height:52px; color:var(--ink); cursor:pointer; text-align:left; font-family:var(--body); font-size:14px}
+.shareopt .ic{width:34px; height:34px; border-radius:9px; background:var(--surface-2); display:grid; place-items:center; flex:none; font-family:var(--data); font-size:11px; font-weight:700; color:var(--accent-hi)}
+.shareopt small{display:block; color:var(--ink-3); font-size:11.5px; line-height:1.4}
+
+.note{max-width:430px; width:100%; font-size:13px; line-height:1.65; color:var(--ink-3)}
+.note b{color:var(--ink-2); font-family:var(--data); font-size:11px; letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:5px}
+
+/* ---------- pitch map + audio ---------- */
+.seg{display:flex; gap:6px; background:var(--sunk); border-radius:10px; padding:4px}
+.seg button{
+  flex:1; background:none; border:0; color:var(--ink-3); cursor:pointer; min-height:40px; border-radius:7px;
+  font-family:var(--data); font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;
+}
+.seg button[aria-current="true"]{background:var(--accent); color:var(--on-accent); font-weight:700}
+
+.mind{position:relative}
+.wires{position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:0}
+.mflow{position:relative; z-index:1; padding-left:46px; display:flex; flex-direction:column; gap:20px}
+.mphase{position:relative}
+.mcore{position:relative; min-height:38px; padding-top:1px}
+.mdisc{
+  position:absolute; left:-46px; top:0; width:34px; height:34px; border-radius:50%;
+  background:var(--accent); color:var(--on-accent); display:grid; place-items:center;
+  font-family:var(--display); font-weight:800; font-size:14px;
+  box-shadow:0 0 0 5px var(--bg), 0 0 20px -2px rgba(242,106,33,.6);
+}
+.mcore b{font-family:var(--display); font-weight:800; font-size:15.5px; letter-spacing:.04em; text-transform:uppercase; display:block; line-height:1.3}
+.mcore .msub{display:block; margin-top:3px; font-family:var(--data); font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); line-height:1.5}
+.mbr{display:flex; flex-direction:column; gap:9px; padding-left:24px; margin-top:12px}
+.mnode{
+  position:relative; width:100%; text-align:left; cursor:pointer; min-height:44px;
+  background:var(--surface); border:1px solid var(--line); color:var(--ink-2);
+  border-radius:13px; padding:10px 13px; font-family:var(--body); font-size:13.5px; line-height:1.45;
+  transition:border-color .18s ease, background .18s ease, color .18s ease;
+}
+.mnode:hover{border-color:var(--ink-3); color:var(--ink)}
+.mnode[aria-expanded="true"]{border-color:var(--accent-hi); background:var(--surface-2); color:var(--ink)}
+.mnode .mtag{display:block; margin-bottom:3px; font-family:var(--data); font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.mnode[aria-expanded="true"] .mtag{color:var(--accent-hi)}
+.mback{
+  background:var(--sunk); border:1px solid rgba(62,213,152,.32); border-radius:13px;
+  padding:12px 13px; font-size:13.5px; line-height:1.55; color:var(--ink);
+}
+.mback .mbl{display:block; margin-top:9px; font-family:var(--data); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ok)}
+.mkey{display:flex; gap:14px; flex-wrap:wrap; padding:2px 0 2px}
+.mkey span{display:flex; align-items:center; gap:6px; font-family:var(--data); font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3)}
+.mkey i{width:17px; height:0; border-top:2px solid currentColor; display:block}
+.mkey .k1{color:var(--accent)} .mkey .k2{color:var(--ink-3)} .mkey .k3{color:var(--ok)}
+.mkey .k2 i{border-top-style:dashed} .mkey .k3 i{border-top-style:dashed}
+@keyframes dashflow{to{stroke-dashoffset:-20}}
+.wires .flow{animation:dashflow 1.1s linear infinite}
+@media (prefers-reduced-motion:reduce){.wires .flow{animation-name:none}}
+
+.audio{display:flex; align-items:center; gap:10px; background:var(--sunk); border-radius:10px; padding:9px 11px; margin-top:10px}
+.audio .ab{
+  width:38px; height:38px; flex:none; border-radius:50%; border:0; cursor:pointer;
+  background:var(--accent); color:var(--on-accent); display:grid; place-items:center; font-size:13px; line-height:1;
+}
+.audio .ab.rec{background:var(--warn); color:#0A1631}
+.audio .ab.rec.on{animation:bl 1s ease-in-out infinite}
+.wave{flex:1; display:flex; align-items:center; gap:2px; height:26px; overflow:hidden}
+.wave i{flex:1; background:var(--ink-3); border-radius:1px; min-height:3px; display:block}
+.wave.live i{background:var(--warn)}
+.wave.play i{background:var(--accent-hi)}
+.audio .ad{font-family:var(--data); font-size:11.5px; color:var(--ink-2); width:34px; text-align:right; flex:none; font-variant-numeric:tabular-nums}
+.audio .al{font-family:var(--data); font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); width:52px; flex:none}
+
+/* ---------- duel ---------- */
+.hud{padding:0 16px 10px; display:flex; flex-direction:column; gap:9px; border-bottom:1px solid var(--line)}
+.g{display:flex; align-items:center; gap:9px}
+.g .gl{font-family:var(--data); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); width:66px; flex:none}
+.g .gv{font-family:var(--data); font-size:12.5px; width:30px; text-align:right; flex:none; font-variant-numeric:tabular-nums}
+.phasebar{display:flex; gap:4px; list-style:none; margin:0; padding:0}
+.phasebar li{
+  flex:1; text-align:center; font-family:var(--data); font-size:8.5px; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--ink-3); padding:5px 2px 4px; border-top:3px solid var(--line); border-radius:2px; line-height:1.3;
+}
+.phasebar li.done{border-top-color:var(--ok); color:var(--ink-2)}
+.phasebar li.now{border-top-color:var(--accent); color:var(--accent-hi); font-weight:700}
+
+.mood{background:var(--sunk); border-radius:12px; padding:13px 14px; display:flex; flex-direction:column; gap:8px}
+.mood .who{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.mood .line{font-size:16.5px; line-height:1.45; font-style:italic}
+
+.movecard{
+  display:flex; flex-direction:column; gap:7px; width:100%; text-align:left; cursor:pointer;
+  background:var(--surface); border:1.5px solid var(--line); color:var(--ink);
+  border-radius:12px; padding:11px 13px; min-height:48px; font-family:var(--body);
+}
+.movecard:hover{border-color:var(--ink-3)}
+.movecard .mvhead{display:flex; gap:5px; flex-wrap:wrap; align-items:center}
+.movecard .mvtext{font-size:14px; line-height:1.5}
+.movecard.early{border-style:dashed}
+.movecard.right{border-color:var(--ok)} .movecard.wrong{border-color:var(--warn)}
+.movecard:disabled{opacity:.5; cursor:default}
+
+.badge{font-family:var(--data); font-size:9px; letter-spacing:.09em; text-transform:uppercase; padding:3px 7px; border-radius:5px; font-weight:700}
+.badge.ph{background:var(--sunk); color:var(--ink-3)}
+.badge.early{background:rgba(255,107,107,.18); color:var(--warn)}
+.t-empathie{background:rgba(95,211,196,.17); color:#5FD3C4}
+.t-fakten{background:rgba(127,169,255,.17); color:#7FA9FF}
+.t-nutzen{background:rgba(242,179,60,.17); color:#F2B33C}
+.t-fuehrung{background:rgba(200,139,255,.17); color:#C88BFF}
+
+.effect{border-radius:12px; padding:13px; font-size:13.5px; line-height:1.6; color:var(--ink-2); background:var(--sunk)}
+.effect b{display:block; font-family:var(--display); font-size:13px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:5px}
+.effect.good b{color:var(--ok)} .effect.bad b{color:var(--warn)} .effect.mid b{color:var(--ink)}
+.deltas{display:flex; gap:12px; margin-top:8px; font-family:var(--data); font-size:12px}
+.deltas .up{color:var(--ok)} .deltas .dn{color:var(--warn)}
+
+.conn{display:flex; align-items:center; gap:11px}
+.pulse{width:11px; height:11px; border-radius:50%; background:var(--ink-3); flex:none}
+.pulse.search{background:var(--accent); animation:bl 1s ease-in-out infinite}
+.pulse.on{background:var(--ok)}
+@keyframes bl{50%{opacity:.25}}
+.matrix{display:grid; grid-template-columns:1fr auto auto; gap:7px 9px; align-items:center; font-size:12.5px}
+.matrix .h{font-family:var(--data); font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+
+.card.install{border:1px solid var(--accent); background:linear-gradient(170deg,var(--surface-2),var(--surface))}
+.card .btn + .btn{margin-top:-2px}
+html,body{height:100%}
+/* ---------- Pitch-Editor ---------- */
+.pitchbar{display:flex; gap:7px; flex-wrap:wrap}
+.pitchbar button{
+  font-family:var(--data); font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+  background:var(--surface); color:var(--ink-3); border:1px solid var(--line);
+  border-radius:999px; padding:9px 12px; min-height:40px; cursor:pointer;
+}
+.pitchbar button[aria-current="true"]{background:var(--accent); color:var(--on-accent); border-color:var(--accent); font-weight:700}
+.pitchbar button.neu{border-style:dashed}
+
+.blockact{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.btn.klein{width:auto; flex:1 1 auto; min-height:44px; padding:11px 14px; font-size:12px}
+.ta{
+  width:100%; background:var(--sunk); color:var(--ink); border:1.5px solid var(--accent-hi);
+  border-radius:10px; padding:11px 12px; font-family:var(--body); font-size:14px; line-height:1.55;
+  min-height:110px; resize:vertical; display:block;
+}
+.talabel{display:block; margin:10px 0 5px; font-family:var(--data); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+
+.kartenliste{display:flex; flex-direction:column; gap:8px; margin-top:4px}
+.kartei{background:var(--sunk); border:1px solid var(--line); border-radius:11px; padding:11px 12px}
+.kartei .ke{display:block; font-weight:700; margin-bottom:4px}
+.kartei .ka{display:block; color:var(--ink-2); font-size:13.5px; line-height:1.55}
+.kartei .kact{display:flex; gap:8px; margin-top:10px}
+
+.toast{
+  position:absolute; left:14px; right:14px; bottom:calc(74px + env(safe-area-inset-bottom,0px));
+  background:var(--surface-2); border:1px solid var(--accent); border-radius:12px;
+  padding:12px 14px; display:flex; align-items:center; gap:12px; z-index:9;
+  box-shadow:0 18px 34px -14px rgba(0,0,0,.8); font-size:13.5px; line-height:1.45;
+}
+.toast span{flex:1}
+.toast button{
+  flex:none; background:var(--accent); color:var(--on-accent); border:0; border-radius:9px;
+  padding:10px 14px; min-height:44px; cursor:pointer;
+  font-family:var(--display); font-weight:700; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+}
+.readonly{font-family:var(--data); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3)}
+
+:where(button,input,textarea,[tabindex]):focus-visible{outline:2.5px solid var(--accent-hi); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important; transition-duration:.01ms!important}}
+
+</style>
+
+<div class="stage">
+  <div class="phone">
+    <div class="screens" id="screens">
+
+      <!-- ============ HEUTE ============ -->
+      <section class="screen" id="s-heute">
+        <div class="topline">
+          <h2 class="sh" id="greet">Moin</h2>
+          <span class="chip acc" id="streakChip">0 Tage Serie</span>
+        </div>
+
+        <div class="card install" id="installCard" hidden>
+          <h3 class="ch">Auf den Homescreen legen</h3>
+          <p class="muted" id="installTxt">Dann startet die App im Vollbild, ohne Browserleiste — und behält deinen Fortschritt zuverlässig.</p>
+          <button class="btn" id="btnInstall" hidden>Jetzt installieren</button>
+          <button class="btn sec" id="btnInstallClose">Später</button>
+        </div>
+
+        <div class="card flat" id="backupNag" hidden>
+          <h3 class="ch">Sicherung fällig</h3>
+          <p class="muted" id="backupNagTxt">Deine letzte Sicherung ist eine Weile her.</p>
+          <button class="btn sec" id="btnNagExport">Fortschritt sichern</button>
+        </div>
+
+        <div class="streakrow">
+          <div class="stat"><span class="n acc" id="kpiStreak">0</span><span class="l">Serie</span></div>
+          <div class="stat"><span class="n" id="kpiDue">0</span><span class="l">Fällig heute</span></div>
+          <div class="stat"><span class="n" id="kpiXp">0</span><span class="l">Punkte</span></div>
+        </div>
+
+        <div class="card">
+          <div class="topline">
+            <h3 class="ch">Tagesziel</h3>
+            <span class="muted" id="goalTxt">0 von 1 Lektion</span>
+          </div>
+          <div class="bar"><i id="goalBar" style="width:6%"></i></div>
+          <p class="muted">Der Aufwärm-Modus zählt an Tourtagen als erfüllt — zwei Minuten reichen.</p>
+        </div>
+
+        <div class="card">
+          <span class="chip" id="lessonKurs">Beispielkurs</span>
+          <div>
+            <b id="lessonTitel" style="font-family:var(--display);font-size:17px;letter-spacing:-.005em;display:block;line-height:1.35">Lektion 1</b>
+            <p class="muted" id="lessonMeta" style="margin-top:4px">3 Aufgaben · etwa 3 Minuten</p>
+          </div>
+          <button class="btn" id="startLesson">Lektion starten</button>
+        </div>
+
+        <div class="card flat">
+          <div class="topline"><h3 class="ch">Fällig heute</h3><span class="chip" id="dueChip">0 Karten</span></div>
+          <p class="muted" id="dueTxt">Noch nichts im Stapel — was du falsch beantwortest, kommt hier wieder hoch.</p>
+          <button class="btn sec" id="warmup">Aufwärmen · 2 Minuten</button>
+        </div>
+      </section>
+
+      <!-- ============ PFAD ============ -->
+      <section class="screen" id="s-pfad" hidden>
+        <h2 class="sh" id="pfadKurs">Kurs</h2>
+        <p class="muted" id="pfadLead"></p>
+        <div class="path" id="pfadBox"></div>
+      </section>
+
+      <!-- ============ DUELL ============ -->
+      <section class="screen" id="s-duell" hidden>
+        <h2 class="sh">Die Tür</h2>
+        <p class="muted">Einer pitcht, einer macht auf. Zug um Zug über Bluetooth — danach wird getauscht.</p>
+
+        <div class="card">
+          <div class="conn">
+            <span class="pulse" id="pulse"></span>
+            <div style="flex:1;min-width:0">
+              <b style="font-family:var(--display);font-size:15px;display:block;line-height:1.35" id="connName">Kein Gerät in der Nähe</b>
+              <span class="muted" id="connSub">Bluetooth ist an. Dein Gegner muss den Duell-Bildschirm offen haben.</span>
+            </div>
+          </div>
+          <button class="btn" id="btnScan">Nach Kollegen suchen</button>
+          <div id="roleBox" hidden>
+            <div class="topline" style="margin-bottom:9px">
+              <span class="chip acc">Du: Berater</span><span class="chip">Kevin: Kunde</span>
+            </div>
+            <button class="btn" id="btnStartDuel">An die Tür</button>
+          </div>
+        </div>
+
+        <div class="card flat">
+          <h3 class="ch">Der Plan — nur so gewinnst du</h3>
+          <p class="muted" id="planFolge"></p>
+          <p class="muted"><b style="color:var(--accent-hi)" id="planLetzte">Die letzte Phase entscheidet.</b> Nach der Unterschrift kommen die Nachwehen: Entscheidung bestätigen, Verifikationsanruf ankündigen, den Grund wiederholen lassen. Zwei gute Züge, sonst steht der Abschluss zwar — und storniert sechs Tage später.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="ch">Wirksamkeit</h3>
+          <div class="matrix">
+            <span class="h">Reaktion</span><span class="h">stark</span><span class="h">wirkungslos</span>
+            <span>Abwehr</span><span class="badge t-empathie">Empathie</span><span class="badge t-fakten">Fakten</span>
+            <span>Skepsis</span><span class="badge t-fakten">Fakten</span><span class="badge t-nutzen">Nutzen</span>
+            <span>Gleichgültigkeit</span><span class="badge t-nutzen">Nutzen</span><span class="badge t-empathie">Empathie</span>
+            <span>Ausweichen</span><span class="badge t-fuehrung">Führung</span><span class="badge t-nutzen">Nutzen</span>
+          </div>
+          <p class="muted">Auf »keine Zeit« mit Zahlen zu antworten macht es schlimmer. Auf Skepsis mit noch mehr Nutzen auch.</p>
+        </div>
+
+        <div class="card flat">
+          <div class="topline"><h3 class="ch">Kein Bluetooth?</h3><span class="chip">Notweg</span></div>
+          <p class="muted">Code per WhatsApp schicken, jeder spielt wann er will. Funktioniert auch im Browser.</p>
+          <button class="btn sec" id="newDuel">Code verschicken</button>
+        </div>
+
+        <div class="card flat">
+          <div class="topline"><h3 class="ch">Heute gewertet</h3><span class="chip" id="duelLeft">3 von 3</span></div>
+          <p class="muted">Danach geht es weiter, zählt aber nicht mehr auf die Crew-Wertung.</p>
+        </div>
+      </section>
+
+      <!-- ============ PITCH ============ -->
+      <section class="screen" id="s-pitch" hidden>
+        <div class="topline">
+          <h2 class="sh">Pitch-Werkstatt</h2>
+          <span class="chip acc" id="pitchQuelle">Beispiel</span>
+        </div>
+        <p class="muted" id="pitchTitel">Beispiel-Pitch</p>
+
+        <div class="pitchbar" id="pitchBar" aria-label="Pitch wählen"></div>
+
+        <div class="seg">
+          <button data-tab="bau" aria-current="true">Bausteine</button>
+          <button data-tab="karte">Gesprächspfad</button>
+        </div>
+
+        <div id="p-bau"></div>
+
+        <div id="p-karte" hidden>
+          <p class="muted">Der rote Faden läuft senkrecht durch. Tippe eine Abweichung an — der grüne Bogen zeigt, wo du wieder rauskommst.</p>
+          <div class="mkey">
+            <span class="k1"><i></i>Roter Faden</span>
+            <span class="k2"><i></i>Abweichung</span>
+            <span class="k3"><i></i>Rückweg</span>
+          </div>
+          <div class="mind" id="mindBox">
+            <svg class="wires" id="wires" aria-hidden="true"></svg>
+            <div class="mflow" id="mflow"></div>
+          </div>
+        </div>
+
+        <button class="btn" id="sharePitch">Diesen Pitch teilen</button>
+        <button class="btn sec" id="pitchDelete" hidden>Diese Fassung löschen</button>
+        <p class="muted">Der Empfänger sieht erst eine Vorschau, bevor etwas gespeichert wird. Aufnahmen gehen nur mit, wenn du sie einzeln dazuwählst.</p>
+      </section>
+
+      <!-- ============ ICH ============ -->
+      <section class="screen" id="s-ich" hidden>
+        <h2 class="sh">Dein Horni</h2>
+
+        <div class="rhinobox">
+          <svg viewBox="0 0 200 140" role="img" aria-label="Stilisiertes Nashorn, Stufe Bulle">
+            <ellipse cx="100" cy="132" rx="72" ry="6" fill="#081228"/>
+            <rect x="58" y="96" width="19" height="34" rx="7" fill="#4D6299"/>
+            <rect x="128" y="96" width="19" height="34" rx="7" fill="#4D6299"/>
+            <path d="M62 56 C88 42 136 42 158 58 C176 72 180 94 174 108 L62 108 C46 98 44 70 62 56 Z" fill="#7186BC"/>
+            <path d="M174 84 C184 82 188 90 184 98 L178 96 Z" fill="#5E75AC"/>
+            <rect x="70" y="96" width="19" height="34" rx="7" fill="#7186BC"/>
+            <rect x="140" y="96" width="19" height="34" rx="7" fill="#7186BC"/>
+            <path d="M66 48 L72 30 L86 46 Z" fill="#5E75AC"/>
+            <ellipse cx="48" cy="84" rx="32" ry="25" fill="#8395C6"/>
+            <path d="M18 74 L28 38 L42 72 Z" fill="#F0F3FB"/>
+            <path d="M22 92 C16 92 14 84 20 82 L30 82 L30 94 Z" fill="#8395C6"/>
+            <circle cx="40" cy="76" r="3.4" fill="#0A1631"/>
+            <path d="M96 60 L104 74 M116 62 L122 74" stroke="#5E75AC" stroke-width="3" stroke-linecap="round" fill="none"/>
+          </svg>
+          <div style="text-align:center">
+            <b id="rhinoStufe" style="font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:.02em;text-transform:uppercase;display:block">Kälbchen · Stufe 1</b>
+            <span class="muted" id="rhinoNext"></span>
+          </div>
+          <div class="bar" style="width:100%"><i id="rhinoBar" style="width:68%"></i></div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center" id="rhinoVar"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="ch">Werte</h3>
+          <div class="statline"><span class="nm">Wucht</span><div class="bar"><i id="vWucht" style="width:62%"></i></div><span class="vl" id="nWucht">31</span></div>
+          <div class="statline"><span class="nm">Panzer</span><div class="bar"><i id="vPanzer" style="width:44%"></i></div><span class="vl" id="nPanzer">22</span></div>
+          <div class="statline"><span class="nm">Witterung</span><div class="bar"><i id="vWitt" style="width:78%"></i></div><span class="vl" id="nWitt">39</span></div>
+          <div class="statline"><span class="nm">Ausdauer</span><div class="bar"><i id="vAus" style="width:54%"></i></div><span class="vl" id="nAus">27</span></div>
+          <p class="muted">Panzer hinkt hinterher: Er wächst nur aus Einwand-Aufgaben. Deshalb stehen heute vier Einwandkarten im Stapel.</p>
+        </div>
+
+        <div class="card">
+          <div class="topline"><h3 class="ch">Karriereleiter</h3><span class="chip">selbst eingetragen</span></div>
+          <div class="field"><label for="kEigen">Eigenumsatz im Monat</label><input id="kEigen" type="number" inputmode="numeric" value="2400" step="100"></div>
+          <div class="field"><label for="kCrew">Junior Trainer in der Crew</label><input id="kCrew" type="number" inputmode="numeric" value="1" step="1"></div>
+          <div class="field"><label for="kJe">Umsatz je Crew-Mitglied</label><input id="kJe" type="number" inputmode="numeric" value="1350" step="50"></div>
+
+          <div id="ladder" style="margin-top:4px"></div>
+          <p class="muted">Die Zahlen bleiben auf dem Gerät. Über eine Bestätigung entscheidet der Freigabeprozess, nicht die App.</p>
+        </div>
+
+        <div class="card">
+          <div class="topline"><h3 class="ch">Inhaltspaket</h3><span class="chip" id="packChip">Beispielinhalte</span></div>
+          <p class="muted" id="packTxt">Die App wird mit Beispielinhalten ausgeliefert. Dein Trainer schickt dir das echte Paket als Datei — hier laden.</p>
+          <button class="btn" id="btnPackLoad">Inhaltspaket laden</button>
+          <button class="btn sec" id="btnPackShare">Paket weitergeben</button>
+          <button class="btn sec" id="btnPackReset" hidden>Zurück auf Beispielinhalte</button>
+          <input type="file" id="filePack" accept="application/json,.kwf,.json" hidden>
+          <p class="muted" id="packMsg"></p>
+        </div>
+
+        <div class="card">
+          <div class="topline"><h3 class="ch">Sicherung</h3><span class="chip" id="backupChip">nie gesichert</span></div>
+          <p class="muted">Alles liegt auf diesem Gerät und sonst nirgendwo. Handy weg heißt Fortschritt weg — sichere ihn ab und zu als Datei.</p>
+          <button class="btn sec" id="btnExport">Als Datei sichern</button>
+          <button class="btn sec" id="btnImport">Sicherung einlesen</button>
+          <input type="file" id="fileImport" accept="application/json,.json" hidden>
+          <p class="muted" id="storageTxt"></p>
+        </div>
+
+        <div class="card flat">
+          <div class="topline"><h3 class="ch">Alles zurücksetzen</h3></div>
+          <p class="muted">Löscht Fortschritt, Werte und Serie auf diesem Gerät. Sichere vorher, wenn du etwas behalten willst.</p>
+          <button class="btn sec" id="btnReset">Zurücksetzen</button>
+        </div>
+      </section>
+
+    </div><!-- /screens -->
+
+    <nav class="tabs" aria-label="Hauptnavigation">
+      <button data-go="heute" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Heute</button>
+      <button data-go="pfad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M9 17c6-1 6-9 6-9"/></svg>Pfad</button>
+      <button data-go="duell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M4 20l4-4"/></svg>Duell</button>
+      <button data-go="pitch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v12H8l-3 3z"/><path d="M9 9h6"/></svg>Pitch</button>
+      <button data-go="ich"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Ich</button>
+    </nav>
+
+    <!-- lesson overlay -->
+    <div class="overlay" id="lesson" hidden>
+      <div class="obar">
+        <button class="x" id="quitLesson" aria-label="Lektion abbrechen">×</button>
+        <div class="bar" style="flex:1"><i id="lessonBar" style="width:0%"></i></div>
+        <span class="chip" id="lessonCount">1/3</span>
+      </div>
+      <div class="hud" id="duelHud" hidden>
+        <div class="g"><span class="gl">Geduld</span><div class="bar ok" style="flex:1"><i id="gGeduld" style="width:100%"></i></div><span class="gv" id="nGeduld">100</span></div>
+        <div class="g"><span class="gl">Vertrauen</span><div class="bar" style="flex:1"><i id="gVert" style="width:0%"></i></div><span class="gv" id="nVert">0</span></div>
+        <ol class="phasebar" id="phasebar"></ol>
+      </div>
+      <div class="obody" id="lessonBody"></div>
+      <div class="ofoot">
+        <button class="btn" id="lessonAct" disabled>Prüfen</button>
+        <p class="btn-hint" id="lessonHint">Wähle eine Antwort</p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" hidden>
+      <span id="toastTxt"></span>
+      <button id="toastAct">Rückgängig</button>
+    </div>
+
+    <!-- share sheet -->
+    <div class="sheet" id="sheet" hidden>
+      <div class="inner">
+        <div class="topline"><h3 class="ch" id="sheetTitle">Pitch teilen</h3><button class="x" id="closeSheet" aria-label="Schließen" style="background:none;border:0;color:var(--ink-3);font-size:24px;cursor:pointer;min-width:44px;min-height:44px">×</button></div>
+        <p class="muted" id="sheetSub">glasfaser-neubau.kwf · 3,1 kB</p>
+        <button class="shareopt"><span class="ic">WA</span><span>WhatsApp, Mail, Signal<small>Überall — über den System-Teilen-Dialog</small></span></button>
+        <button class="shareopt"><span class="ic">AD</span><span>AirDrop<small>iPhone und Mac in der Nähe</small></span></button>
+        <button class="shareopt"><span class="ic">NFC</span><span>NFC<small>Android, verpackte App — Telefone aneinanderhalten</small></span></button>
+        <button class="shareopt"><span class="ic">URL</span><span>Kurzlink<small>Pitch komprimiert in der Adresse</small></span></button>
+      </div>
+    </div>
+  </div><!-- /phone -->
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- navigation ---------- */
+  var SCREENS = ['heute','pfad','duell','pitch','ich'];
+  function go(name){
+    if (!$('lesson').hidden) closeLesson();
+    $('sheet').hidden = true;
+    SCREENS.forEach(function(s){ $('s-'+s).hidden = (s !== name); });
+    document.querySelectorAll('[data-go]').forEach(function(b){
+      b.setAttribute('aria-current', b.dataset.go === name ? 'true' : 'false');
+    });
+    $('screens').scrollTop = 0;
+  }
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){ go(b.dataset.go); });
+  });
+
+  /* ---------- state ---------- */
+  var S = { streak:0, due:0, xp:0, goal:0, wucht:0, panzer:0, witt:0, aus:0, lastDay:'', lastBackup:0, lektion:0 };
+
+  var STATROWS = [
+    ['vWucht','nWucht','wucht'], ['vPanzer','nPanzer','panzer'],
+    ['vWitt','nWitt','witt'], ['vAus','nAus','aus']
+  ];
+
+  function renderStats(){
+    $('kpiStreak').textContent = S.streak;
+    $('kpiDue').textContent = S.due;
+    $('kpiXp').textContent = S.xp;
+    $('streakChip').textContent = S.streak + ' Tage Serie';
+    $('goalTxt').textContent = S.goal + ' von 1 Lektion';
+    $('goalBar').style.width = (S.goal >= 1 ? 100 : 6) + '%';
+    STATROWS.forEach(function(row){
+      var v = S[row[2]];
+      $(row[0]).style.width = Math.min(100, Math.round(v/50*100)) + '%';
+      $(row[1]).textContent = v;
+    });
+    renderRhino();
+    $('dueChip').textContent = S.due + (S.due === 1 ? ' Karte' : ' Karten');
+    $('dueTxt').textContent = S.due
+      ? 'Was du falsch beantwortet hast, kommt nach dem Wiederholungsplan wieder hoch.'
+      : 'Noch nichts im Stapel — was du falsch beantwortest, kommt hier wieder hoch.';
+    persist();
+  }
+
+  /* ---------- lesson ---------- */
+
+
+  var qi = 0, picked = null, picks = [], phase = 'answer', tick = null, gained = {};
+
+  function openLesson(){
+    qi = 0; picks = []; gained = {};
+    $('duelHud').hidden = true;
+    $('lessonAct').onclick = actClick;
+    $('lesson').hidden = false;
+    renderQ();
+  }
+  function closeLesson(){
+    if (tick) { clearInterval(tick); tick = null; }
+    $('lesson').hidden = true;
+    $('duelHud').hidden = true;
+  }
+
+  function renderQ(){
+    if (tick) { clearInterval(tick); tick = null; }
+    picked = null; picks = []; phase = 'answer';
+    var q = QUESTIONS[qi], b = $('lessonBody');
+    $('lessonCount').textContent = (qi+1) + '/' + QUESTIONS.length;
+    $('lessonBar').style.width = Math.round(qi / QUESTIONS.length * 100) + '%';
+    b.innerHTML = '';
+
+    var chip = document.createElement('span');
+    chip.className = 'chip acc'; chip.textContent = q.lead;
+    b.appendChild(chip);
+
+    if (q.quote){
+      var qu = document.createElement('p');
+      qu.className = 'quote'; qu.textContent = '»' + q.quote + '«';
+      b.appendChild(qu);
+    }
+    var pr = document.createElement('p');
+    pr.className = 'prompt'; pr.textContent = q.prompt;
+    b.appendChild(pr);
+
+    if (q.timer){
+      var tw = document.createElement('div');
+      tw.className = 'timer';
+      tw.innerHTML = '<div class="bar ok" style="flex:1"><i id="tbar" style="width:100%"></i></div><span class="t" id="ttxt">' + q.timer + ',0 s</span>';
+      b.appendChild(tw);
+      startTimer(q.timer);
+    }
+
+    if (q.kind === 'choice'){
+      q.options.forEach(function(text, i){
+        var o = document.createElement('button');
+        o.type = 'button'; o.className = 'opt'; o.setAttribute('aria-pressed','false');
+        var kopf = document.createElement('span');
+        kopf.className = 'opthead'; kopf.textContent = text;
+        o.appendChild(kopf);
+        o.addEventListener('click', function(){
+          if (phase !== 'answer') return;
+          picked = i;
+          b.querySelectorAll('.opt').forEach(function(x,j){ x.setAttribute('aria-pressed', j===i ? 'true':'false'); });
+          enableAct();
+        });
+        b.appendChild(o);
+      });
+    } else {
+      var hint = document.createElement('p');
+      hint.className = 'ordhint'; hint.id = 'ordHint';
+      hint.textContent = ORDHINT;
+      b.appendChild(hint);
+
+      var list = document.createElement('div');
+      list.className = 'ordlist';
+      q.items.forEach(function(text, i){ list.appendChild(ordZeile(text, i)); });
+      b.appendChild(list);
+
+      var live = document.createElement('p');
+      live.className = 'muted'; live.id = 'ordLive';
+      live.setAttribute('role', 'status'); live.setAttribute('aria-live', 'polite');
+      b.appendChild(live);
+
+      gewaehlt = null;
+      nummeriere(list);
+    }
+    if (q.kind === 'choice') setAct('Prüfen', false, 'Wähle eine Antwort');
+    else setAct('Prüfen', true, '');
+  }
+
+  /* ---------- Reihenfolge: antippen, Zielposition antippen ----------
+     Kein Ziehen. Jede Zeile ist ein eigener Knopf über 44px, damit die
+     Aufgabe auch mit Tastatur und mit großen Fingern bedienbar bleibt. */
+  var ORDHINT = 'Zeile antippen, dann die Position antippen, an die sie soll';
+  var gewaehlt = null;
+  var offenInit = false;
+
+  function ordZeile(text, i){
+    var row = document.createElement('button');
+    row.type = 'button'; row.className = 'ord'; row.dataset.i = i;
+    row.setAttribute('aria-pressed', 'false');
+    var pos = document.createElement('span'); pos.className = 'pos'; row.appendChild(pos);
+    var lab = document.createElement('span'); lab.className = 'lab'; lab.textContent = text;
+    row.appendChild(lab);
+    row.addEventListener('click', function(){ ordTipp(row); });
+    return row;
+  }
+
+  function nummeriere(list){
+    [].forEach.call(list.children, function(r, k){
+      r.querySelector('.pos').textContent = k + 1;
+    });
+  }
+
+  function ordHinweis(txt, aktiv){
+    var h = $('ordHint');
+    if (!h) return;
+    h.textContent = txt;
+    h.className = 'ordhint' + (aktiv ? ' aktiv' : '');
+  }
+
+  function ordSage(txt){
+    var el = $('ordLive');
+    if (el) el.textContent = txt;
+  }
+
+  function ordWaehlen(row){
+    gewaehlt = row;
+    [].forEach.call(row.parentElement.children, function(r){
+      r.setAttribute('aria-pressed', r === row ? 'true' : 'false');
+      r.classList.toggle('ziel', r !== row);
+    });
+    var name = row.querySelector('.lab').textContent;
+    ordHinweis('Wohin soll »' + name + '«? Zielposition antippen.', true);
+    ordSage(name + ' ausgewählt. Jetzt die Zielposition antippen.');
+  }
+
+  function ordLoesen(list){
+    gewaehlt = null;
+    [].forEach.call(list.children, function(r){
+      r.setAttribute('aria-pressed', 'false');
+      r.classList.remove('ziel');
+    });
+    ordHinweis(ORDHINT, false);
+  }
+
+  function ordTipp(row){
+    if (phase !== 'answer') return;
+    var list = row.parentElement;
+
+    if (!gewaehlt){ ordWaehlen(row); return; }
+    if (gewaehlt === row){                       // nochmal antippen hebt die Auswahl auf
+      ordLoesen(list);
+      ordSage('Auswahl aufgehoben.');
+      return;
+    }
+
+    var rows = [].slice.call(list.children);
+    var von = rows.indexOf(gewaehlt), nach = rows.indexOf(row);
+    if (von < nach) list.insertBefore(gewaehlt, row.nextSibling);
+    else list.insertBefore(gewaehlt, row);
+
+    var bewegt = gewaehlt;
+    ordLoesen(list);
+    nummeriere(list);
+    ordSage(bewegt.querySelector('.lab').textContent + ' steht jetzt auf Position ' +
+      ([].indexOf.call(list.children, bewegt) + 1) + ' von ' + list.children.length + '.');
+    bewegt.focus();
+  }
+
+  function startTimer(secs){
+    var left = secs * 10;
+    tick = setInterval(function(){
+      left--;
+      var bar = $('tbar'), txt = $('ttxt');
+      if (!bar) { clearInterval(tick); tick = null; return; }
+      bar.style.width = Math.max(0, left / (secs*10) * 100) + '%';
+      bar.parentElement.className = 'bar ' + (left < secs*3 ? 'warn' : 'ok');
+      txt.textContent = (left/10).toFixed(1).replace('.', ',') + ' s';
+      if (left <= 0){
+        clearInterval(tick); tick = null;
+        if (phase === 'answer'){ picked = -1; reveal(); }
+      }
+    }, 100);
+  }
+
+  function setAct(label, on, hint){
+    var a = $('lessonAct');
+    a.textContent = label; a.disabled = !on;
+    $('lessonHint').textContent = on ? '' : (hint || '');
+    $('lessonHint').hidden = !!on;
+  }
+  function enableAct(){ setAct('Prüfen', picked !== null, ''); }
+
+  function reveal(){
+    if (tick) { clearInterval(tick); tick = null; }
+    phase = 'result';
+    var q = QUESTIONS[qi], b = $('lessonBody'), correct;
+
+    if (q.kind === 'choice'){
+      correct = picked === q.right;
+      b.querySelectorAll('.opt').forEach(function(o, i){
+        o.setAttribute('aria-pressed','false');
+        var kopf = o.querySelector('.opthead');
+        if (i === q.right){ o.classList.add('right'); kopf.insertAdjacentHTML('afterbegin','<span class="mark">✓</span>'); }
+        else if (i === picked){ o.classList.add('wrong'); kopf.insertAdjacentHTML('afterbegin','<span class="mark">✕</span>'); }
+        // Begründung je Option: warum diese falsch ist, warum die richtige trägt
+        if (q.why && q.why[i]){
+          var w = document.createElement('span');
+          w.className = 'optwhy';
+          var t = document.createElement('b');
+          t.textContent = (i === q.right) ? 'Warum das trägt' : 'Warum das schiefgeht';
+          w.appendChild(t);
+          var s = document.createElement('span'); s.textContent = q.why[i];
+          w.appendChild(s);
+          o.appendChild(w);
+        }
+      });
+    } else {
+      var list = b.querySelector('.ordlist');
+      picks = [].map.call(list.children, function(r){ return +r.dataset.i; });
+      correct = picks.join(',') === q.order.join(',');
+      // in die richtige Reihenfolge sortieren — so sieht man die Lösung, nicht nur die Note
+      q.order.forEach(function(idx, k){
+        var r = list.querySelector('.ord[data-i="' + idx + '"]');
+        list.appendChild(r);
+        r.classList.add(picks[k] === idx ? 'right' : 'wrong');
+        r.classList.remove('ziel');
+        r.setAttribute('aria-pressed', 'false');
+        r.disabled = true;
+        r.querySelector('.pos').textContent = k + 1;
+      });
+      gewaehlt = null;
+      ordHinweis(correct ? 'Reihenfolge stimmt.' : 'So ist die richtige Reihenfolge.', false);
+      var fehl = picks.filter(function(v, k){ return v !== q.order[k]; }).length;
+      var lv = $('ordLive');
+      if (lv) lv.textContent = correct
+        ? 'Reihenfolge stimmt.'
+        : fehl + ' von ' + q.order.length + ' standen falsch — die Liste zeigt jetzt die richtige Reihenfolge.';
+    }
+
+    var e = document.createElement('div');
+    e.className = 'expl';
+    e.innerHTML = '<b>' + (correct ? 'Sitzt' : (picked === -1 ? 'Zeit abgelaufen' : 'Knapp daneben')) + '</b>';
+    var t = document.createElement('span'); t.textContent = q.expl; e.appendChild(t);
+    b.appendChild(e);
+    e.scrollIntoView({ block:'nearest' });
+
+    gained[q.stat] = (gained[q.stat] || 0) + (correct ? 3 : 1);
+    if (!correct) S.due++;
+    setAct(qi < QUESTIONS.length - 1 ? 'Weiter' : 'Lektion abschließen', true, '');
+  }
+
+  function finish(){
+    var b = $('lessonBody');
+    $('lessonBar').style.width = '100%';
+    $('lessonCount').textContent = 'fertig';
+    var names = { wucht:'Wucht', panzer:'Panzer', witt:'Witterung', aus:'Ausdauer' };
+    var lines = '';
+    Object.keys(gained).forEach(function(k){
+      S[k] += gained[k];
+      lines += '<div class="statline"><span class="nm">' + names[k] + '</span><div class="bar"><i style="width:' +
+               Math.min(100, Math.round(S[k]/50*100)) + '%"></i></div><span class="vl">+' + gained[k] + '</span></div>';
+    });
+    S.xp += 20; markGoal(); S.due = Math.max(0, S.due - 3); naechsteLektion();
+    renderStats();
+
+    b.innerHTML = '<span class="chip ok">Lektion 3 geschafft</span>' +
+      '<p class="prompt">Dein Horni hat zugelegt.</p>' + lines +
+      '<div class="expl"><b>Was als Nächstes wiederkommt</b>Was du sicher konntest, kommt in ein paar Tagen wieder. Was unter Zeitdruck wackelte, schon morgen.</div>';
+    setAct('Zurück zum Start', true, '');
+    $('lessonAct').onclick = function(){ closeLesson(); go('heute'); $('lessonAct').onclick = actClick; };
+  }
+
+  function actClick(){
+    if (phase === 'answer') { reveal(); return; }
+    if (qi < QUESTIONS.length - 1){ qi++; renderQ(); }
+    else finish();
+  }
+
+  $('lessonAct').onclick = actClick;
+  $('startLesson').addEventListener('click', openLesson);
+  $('warmup').addEventListener('click', openLesson);
+  $('quitLesson').addEventListener('click', closeLesson);
+
+  /* ---------- duel: Die Tür ---------- */
+  var TYPES = ['empathie','fakten','nutzen','fuehrung'];
+  var TNAME = { empathie:'Empathie', fakten:'Fakten', nutzen:'Nutzen', fuehrung:'Führung' };
+  var TSTAT = { empathie:'panzer', fakten:'witt', nutzen:'wucht', fuehrung:'aus' };
+
+  var PHASES, MOVES, PROFILES, QUESTIONS, MAP, RUNGS;
+
+
+
+  var MOODS = {
+    abwehr:{ n:'Abwehr', strong:'empathie', weak:'fakten', lines:[], rlines:[] },
+    skepsis:{ n:'Skepsis', strong:'fakten', weak:'nutzen', lines:[], rlines:[] },
+    gleich:{ n:'Gleichgültigkeit', strong:'nutzen', weak:'empathie', lines:[], rlines:[] },
+    ausweichen:{ n:'Ausweichen', strong:'fuehrung', weak:'nutzen', lines:[], rlines:[] }
+  };
+  var MOODKEYS = ['abwehr','skepsis','gleich','ausweichen'];
+
+
+  var D = null;
+
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+  function startDuel(){
+    D = { geduld:100, vert:0, ph:0, turn:0, mood:'abwehr',
+          line:pick(MOODS.abwehr.lines), profile:pick(PROFILES),
+          hand:[], over:false, gained:{}, secured:0, risk:0, grund:false };
+    $('lesson').hidden = false;
+    $('duelHud').hidden = false;
+    $('lessonCount').textContent = 'Zug 1';
+    $('lessonAct').onclick = duelNext;
+    duelTurn();
+  }
+
+  function renderHud(){
+    $('gGeduld').style.width = Math.max(0, D.geduld) + '%';
+    $('gGeduld').parentElement.className = 'bar ' + (D.geduld <= 30 ? 'warn' : 'ok');
+    $('nGeduld').textContent = Math.max(0, D.geduld);
+    $('gVert').style.width = Math.min(100, D.vert) + '%';
+    $('nVert').textContent = Math.min(100, D.vert);
+    $('phasebar').innerHTML = PHASES.map(function(p, i){
+      var c = i < D.ph ? 'done' : (i === D.ph ? 'now' : '');
+      return '<li class="' + c + '">' + p.s + '</li>';
+    }).join('');
+    $('lessonBar').style.width = Math.round(D.ph / 4 * 100) + '%';
+  }
+
+  function buildHand(){
+    var m = MOODS[D.mood], pi = D.ph;
+    var neutral = TYPES.filter(function(t){ return t !== m.strong && t !== m.weak; });
+    var vierte = (pi < 4 && Math.random() < 0.55)
+      ? { ph:pi+1, t:neutral[1] }
+      : { ph:pi, t:neutral[1] };
+    var h = [ { ph:pi, t:m.strong }, { ph:pi, t:m.weak }, { ph:pi, t:neutral[0] }, vierte ];
+    for (var i = h.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random()*(i+1)), tmp = h[i]; h[i] = h[j]; h[j] = tmp;
+    }
+    return h;
+  }
+
+  function duelTurn(){
+    if (tick) { clearInterval(tick); tick = null; }
+    phase = 'answer';
+    D.turn++;
+    D.hand = buildHand();
+    renderHud();
+    $('lessonCount').textContent = 'Zug ' + D.turn;
+
+    var b = $('lessonBody');
+    b.innerHTML = '';
+
+    var mood = document.createElement('div');
+    mood.className = 'mood';
+    mood.innerHTML = '<div class="who"><span class="chip">' +
+      (D.ph === 4 ? 'Nachwehen · ' + D.secured + ' von 2 gesichert' : 'Kevin spielt den Kunden') +
+      '</span><span class="chip acc">' + MOODS[D.mood].n + '</span></div><p class="line">»' + D.line + '«</p>';
+    b.appendChild(mood);
+
+    var tw = document.createElement('div');
+    tw.className = 'timer';
+    tw.innerHTML = '<div class="bar ok" style="flex:1"><i id="tbar" style="width:100%"></i></div><span class="t" id="ttxt">12,0 s</span>';
+    b.appendChild(tw);
+
+    D.hand.forEach(function(card, i){
+      var early = card.ph > D.ph;
+      var el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'movecard' + (early ? ' early' : '');
+      el.dataset.i = i;
+      el.innerHTML = '<span class="mvhead"><span class="badge t-' + card.t + '">' + TNAME[card.t] + '</span>' +
+        '<span class="badge ' + (early ? 'early' : 'ph') + '">' + (early ? 'zu früh · ' + PHASES[card.ph].n : PHASES[card.ph].n) + '</span></span>';
+      var tx = document.createElement('span'); tx.className = 'mvtext';
+      tx.textContent = MOVES[card.ph][card.t];
+      el.appendChild(tx);
+      el.addEventListener('click', function(){ if (phase === 'answer') resolveMove(i); });
+      b.appendChild(el);
+    });
+
+    setAct('Zug wählen', false, 'Tippe eine Antwort an — zwölf Sekunden, wie an der Tür');
+    duelTimer();
+  }
+
+  function duelTimer(){
+    var left = 120;
+    tick = setInterval(function(){
+      left--;
+      var bar = $('tbar'), txt = $('ttxt');
+      if (!bar){ clearInterval(tick); tick = null; return; }
+      bar.style.width = Math.max(0, left/120*100) + '%';
+      bar.parentElement.className = 'bar ' + (left < 36 ? 'warn' : 'ok');
+      txt.textContent = (left/10).toFixed(1).replace('.', ',') + ' s';
+      if (left <= 0){ clearInterval(tick); tick = null; if (phase === 'answer') resolveMove(-1); }
+    }, 100);
+  }
+
+  function resolveMove(i){
+    if (tick){ clearInterval(tick); tick = null; }
+    phase = 'result';
+    var b = $('lessonBody'), m = MOODS[D.mood];
+    var card = i >= 0 ? D.hand[i] : null;
+    var kind, dv, dg, head, why;
+
+    if (!card){
+      kind = 'zoegern'; dv = 0; dg = -10;
+      head = 'Zu lange gezögert'; why = 'An der Tür ist Stille teuer. Zwei Sekunden Pause liest der Kunde als Unsicherheit, und die Tür geht ein Stück weiter zu.';
+    } else if (card.ph > D.ph){
+      kind = 'early'; dv = 0; dg = -15;
+      head = 'Zu früh';
+      why = 'Das gehört in die Phase ' + PHASES[card.ph].n + '. Dafür fehlt dir das Vertrauen — du brauchst ' +
+            PHASES[card.ph].need + ', du hast ' + D.vert + '. Der Kunde merkt, dass du springst.';
+    } else if (card.t === m.strong){
+      kind = 'strong'; dv = 18; dg = -3;
+      head = 'Sehr effektiv';
+      why = TNAME[card.t] + ' ist genau das, was ' + m.n + ' auflöst. Der Kunde macht die Tür ein Stück weiter auf.';
+    } else if (card.t === m.weak){
+      kind = 'weak'; dv = 3; dg = -12;
+      head = 'Wirkungslos';
+      why = TNAME[card.t] + ' läuft bei ' + m.n + ' ins Leere — hier hätte ' + TNAME[m.strong] + ' gezogen. Der Kunde wird ungeduldiger.';
+    } else {
+      kind = 'mid'; dv = 11; dg = -6;
+      head = 'Geht klar';
+      why = 'Sauber, aber nicht der stärkste Hebel. Gegen ' + m.n + ' zieht ' + TNAME[m.strong] + ' am besten.';
+    }
+
+    D.vert = Math.max(0, Math.min(100, D.vert + dv));
+    D.geduld += dg;
+    if (card && dv > 0) D.gained[TSTAT[card.t]] = (D.gained[TSTAT[card.t]] || 0) + (kind === 'strong' ? 2 : 1);
+
+    if (card && card.ph === 2 && card.t === 'nutzen' && (kind === 'strong' || kind === 'mid')) D.grund = true;
+
+    if (D.ph === 4){
+      if (kind === 'strong' || kind === 'mid') D.secured++;
+      else if (kind === 'weak') D.risk += 25;
+      else D.risk += 20;
+      if (D.mood === 'gleich' && kind !== 'strong') D.risk += 10;
+    }
+
+    b.querySelectorAll('.movecard').forEach(function(el, j){
+      el.disabled = true;
+      if (j === i) el.classList.add(kind === 'strong' || kind === 'mid' ? 'right' : 'wrong');
+    });
+
+    var advanced = false;
+    while (D.ph < 4 && D.vert >= PHASES[D.ph+1].need){ D.ph++; advanced = true; }
+    renderHud();
+
+    var e = document.createElement('div');
+    e.className = 'effect ' + (kind === 'strong' ? 'good' : (kind === 'mid' ? 'mid' : 'bad'));
+    e.innerHTML = '<b>' + head + '</b>';
+    var p = document.createElement('span'); p.textContent = why; e.appendChild(p);
+    e.insertAdjacentHTML('beforeend', '<div class="deltas"><span class="' + (dv > 0 ? 'up' : 'dn') + '">Vertrauen ' +
+      (dv > 0 ? '+' + dv : '±0') + '</span><span class="dn">Geduld ' + dg + '</span></div>');
+    b.appendChild(e);
+
+    if (advanced && D.geduld > 0){
+      b.insertAdjacentHTML('beforeend', D.ph === 4
+        ? '<div class="effect good"><b>Die Unterschrift steht</b>Und jetzt entscheidet sich, ob sie hält. ' +
+          'Gleich kommt der Verifikationsanruf: Datenabgleich und eine Frage — warum haben Sie sich dafür entschieden? ' +
+          'Zwei gute Züge, um ihn darauf vorzubereiten.' +
+          (D.grund ? '' : '<div class="deltas"><span class="dn">Du hast nie einen konkreten Grund verankert.</span></div>') +
+          '</div>'
+        : '<div class="effect good"><b>Phase ' + (D.ph+1) + ': ' + PHASES[D.ph].n + '</b>' +
+          'Der Kunde lässt dich weiter. Ab jetzt zählen die Züge dieser Phase.</div>');
+    }
+    b.lastElementChild.scrollIntoView({ block:'nearest' });
+
+    if (D.geduld <= 0){
+      D.over = D.ph === 4 ? 'storno' : 'lose';
+      setAct(D.ph === 4 ? 'Auswertung' : 'Die Tür geht zu', true, ''); return;
+    }
+    if (D.ph === 4 && D.secured >= 2){ D.over = 'win'; setAct('Auswertung', true, ''); return; }
+
+    nextMood(kind);
+    setAct('Weiter', true, '');
+  }
+
+  function nextMood(kind){
+    var soft = ['gleich','ausweichen','gleich','skepsis'];
+    var hard = ['abwehr','skepsis','abwehr','ausweichen'];
+    D.mood = (kind === 'strong') ? pick(soft) : (kind === 'mid' ? pick(MOODKEYS) : pick(hard));
+    D.line = pick(MOODS[D.mood].lines);
+  }
+
+  function duelNext(){
+    if (!D.over){ duelTurn(); return; }
+    duelResult();
+  }
+
+  function duelResult(){
+    if (tick){ clearInterval(tick); tick = null; }
+    $('duelHud').hidden = true;
+    var risk = D.risk + (D.grund ? 0 : 30);
+    var held = D.over === 'win' && risk < 50;
+    var won = held;
+    var score = held ? D.geduld + D.vert : 0;
+    var names = { wucht:'Wucht', panzer:'Panzer', witt:'Witterung', aus:'Ausdauer' };
+    var lines = '';
+    Object.keys(D.gained).forEach(function(k){
+      S[k] += D.gained[k];
+      lines += '<div class="statline"><span class="nm">' + names[k] + '</span><div class="bar"><i style="width:' +
+        Math.min(100, Math.round(S[k]/50*100)) + '%"></i></div><span class="vl">+' + D.gained[k] + '</span></div>';
+    });
+    S.xp += won ? 25 : 8;
+    renderStats();
+    $('duelLeft').textContent = '2 von 3';
+    var titel, kopf, urteil;
+    if (held){
+      titel = 'gehalten'; kopf = 'Abschluss hält';
+      urteil = 'Du bist in ' + D.turn + ' Zügen durch den ganzen Plan gekommen, und der Kunde hat aufgelegt, ohne sich zu wundern.';
+    } else if (D.over === 'lose'){
+      titel = 'Tür zu'; kopf = 'Kein Abschluss';
+      urteil = 'Nach ' + D.turn + ' Zügen war die Geduld weg — du standest noch in der Phase ' + PHASES[D.ph].n + '.';
+    } else {
+      titel = 'Storno'; kopf = 'Unterschrift ja, Geld nein';
+      urteil = D.grund
+        ? 'Der Abschluss stand, aber die letzte Phase saß nicht. Beim Verifikationsanruf ist der Kunde ins Schwimmen geraten.'
+        : 'Beim Verifikationsanruf kam die Frage, warum er sich dafür entschieden hat — und er konnte es nicht sagen. '
+          + 'Du hast in der Präsentation nie einen konkreten Grund verankert.';
+    }
+    $('lessonCount').textContent = titel;
+    $('lessonBar').style.width = '100%';
+
+    $('lessonBody').innerHTML =
+      '<span class="chip ' + (held ? 'ok' : '') + '">' + kopf + '</span>' +
+      '<p class="prompt">' + urteil + '</p>' +
+      '<div class="effect ' + (held ? 'good' : 'bad') + '"><b>' + (held ? score + ' Punkte' : 'Keine Punkte') + '</b>' +
+        (held
+          ? 'Restgeduld ' + D.geduld + ' plus Vertrauen ' + D.vert + '. Je weniger Züge, desto mehr.'
+          : (D.over === 'lose'
+            ? 'Punkte gibt es nur für einen Abschluss, der hält. Geduld sparst du, indem du den starken Zugtyp triffst.'
+            : 'Ein Ja ohne ' + PHASES[4].n + ' ist nichts wert — genau deshalb zählt es hier als eigene Phase. ' +
+              'Storno-Risiko ' + risk + ' von 50.')) +
+      '</div>' +
+      (D.ph === 4
+        ? '<div class="effect ' + (D.grund ? 'mid' : 'bad') + '"><b>Der Verifikationsanruf</b>' +
+          (D.grund
+            ? 'Auf die Frage, warum er sich dafür entschieden hat, hat er deinen Satz wiederholt. Genau so soll es laufen.'
+            : 'Kein verankerter Grund heißt: Der Kunde erfindet am Telefon eine Antwort oder schweigt. Beides kostet den Abschluss.') +
+          '</div>'
+        : '') +
+      '<div class="effect mid"><b>Kevins verdecktes Profil</b>' + D.profile.n + ' — ' + D.profile.h +
+        ' Er hat nur für Karten gepunktet, die dazu passen.</div>' +
+      (lines ? '<div class="card" style="background:var(--sunk)"><h3 class="ch">Dein Horni</h3>' + lines + '</div>' : '') +
+      '<div class="effect mid"><b>Jetzt tauschen</b>Zweite Hälfte: Kevin pitcht, du machst die Tür auf. Beide Hälften zusammen ergeben das Ergebnis.</div>';
+
+    setAct('Fertig', true, '');
+    $('lessonAct').onclick = function(){
+      closeLesson(); $('duelHud').hidden = true; go('duell'); $('lessonAct').onclick = actClick;
+    };
+  }
+
+  /* connect flow */
+  $('btnScan').addEventListener('click', function(){
+    var btn = $('btnScan');
+    btn.disabled = true; btn.textContent = 'Suche läuft…';
+    $('pulse').className = 'pulse search';
+    $('connName').textContent = 'Suche nach Geräten in der Nähe…';
+    $('connSub').textContent = 'Bluetooth, etwa zehn Meter Reichweite.';
+    setTimeout(function(){
+      $('pulse').className = 'pulse on';
+      $('connName').textContent = 'Kevin R. — verbunden';
+      $('connSub').textContent = 'Aus deiner Crew · Gegner im Prototyp simuliert';
+      btn.hidden = true;
+      $('roleBox').hidden = false;
+    }, 1400);
+  });
+  $('btnStartDuel').addEventListener('click', startDuel);
+
+  /* ---------- sheets ---------- */
+  function openSheet(title, sub){
+    $('sheetTitle').textContent = title;
+    $('sheetSub').textContent = sub;
+    $('sheet').hidden = false;
+  }
+  $('sharePitch').addEventListener('click', function(){ openSheet('Pitch teilen','glasfaser-neubau.kwf · 3,1 kB'); });
+  $('newDuel').addEventListener('click', function(){ openSheet('Duell-Code senden','Code RH7-2K9-QX4 · gültig 3 Tage'); });
+  $('closeSheet').addEventListener('click', function(){ $('sheet').hidden = true; });
+  $('sheet').addEventListener('click', function(e){ if (e.target === $('sheet')) $('sheet').hidden = true; });
+  document.querySelectorAll('.shareopt').forEach(function(b){
+    b.addEventListener('click', function(){ $('sheet').hidden = true; });
+  });
+
+  /* ---------- pitch blocks ---------- */
+  document.querySelectorAll('[data-block]').forEach(function(b){
+    var inner = b.nextElementSibling;
+    b.setAttribute('aria-expanded', inner.hidden ? 'false' : 'true');
+    b.addEventListener('click', function(){
+      var open = inner.hidden;
+      inner.hidden = !open;
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      b.querySelector('.tw').textContent = open ? '−' : '+';
+    });
+  });
+
+  /* ---------- Escape schließt, was offen ist ---------- */
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (!$('sheet').hidden){ $('sheet').hidden = true; return; }
+    if (!$('lesson').hidden) closeLesson();
+  });
+
+  /* ---------- pitch: Landkarte ---------- */
+
+
+  function renderMap(){
+    var flow = $('mflow');
+    flow.innerHTML = '';
+    MAP.forEach(function(st, i){
+      var sec = document.createElement('section');
+      sec.className = 'mphase';
+
+      var core = document.createElement('div');
+      core.className = 'mcore';
+      core.innerHTML = '<span class="mdisc" aria-hidden="true">' + (i+1) + '</span>';
+      var nm = document.createElement('b'); nm.textContent = st.n; core.appendChild(nm);
+      var sb = document.createElement('span'); sb.className = 'msub'; sb.textContent = st.sub;
+      core.appendChild(sb);
+      sec.appendChild(core);
+
+      var br = document.createElement('div');
+      br.className = 'mbr';
+      st.d.forEach(function(d){
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'mnode';
+        btn.setAttribute('aria-expanded','false');
+        btn.dataset.p = i;
+        btn.dataset.to = (d.to === undefined ? i : d.to);
+        btn.innerHTML = '<span class="mtag">Abweichung</span>';
+        var at = document.createElement('span'); at.textContent = d.a; btn.appendChild(at);
+
+        var back = document.createElement('div');
+        back.className = 'mback'; back.hidden = true;
+        var rt = document.createElement('span'); rt.textContent = d.r; back.appendChild(rt);
+        var bl = document.createElement('span'); bl.className = 'mbl';
+        bl.textContent = '↩ ' + d.b; back.appendChild(bl);
+
+        btn.addEventListener('click', function(){
+          var open = back.hidden;
+          back.hidden = !open;
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          drawWires();
+        });
+        br.appendChild(btn); br.appendChild(back);
+      });
+      sec.appendChild(br);
+      flow.appendChild(sec);
+    });
+    drawWires();
+  }
+
+  function drawWires(){
+    var mind = $('mindBox'), svg = $('wires');
+    if (!mind || mind.offsetParent === null) return;
+    var box = mind.getBoundingClientRect();
+    if (!box.width) return;
+
+    var discs = [].map.call(mind.querySelectorAll('.mdisc'), function(d){
+      var r = d.getBoundingClientRect();
+      return { x:r.left - box.left + r.width/2, y:r.top - box.top + r.height/2, r:r.width/2 };
+    });
+    if (discs.length < 2) return;
+
+    var parts = ['<path d="M' + discs[0].x + ',' + discs[0].y + ' L' + discs[0].x + ',' +
+                 discs[discs.length-1].y + '" stroke="var(--accent)" stroke-width="3" ' +
+                 'stroke-linecap="round" fill="none" opacity=".5"/>'];
+
+    [].forEach.call(mind.querySelectorAll('.mnode'), function(n){
+      var r = n.getBoundingClientRect();
+      var y = r.top - box.top + Math.min(r.height / 2, 24);
+      var x = r.left - box.left;
+      var from = discs[+n.dataset.p];
+      var open = n.getAttribute('aria-expanded') === 'true';
+
+      parts.push('<path d="M' + from.x + ',' + y + ' C' + (from.x + 15) + ',' + y + ' ' +
+        (x - 15) + ',' + y + ' ' + x + ',' + y + '" fill="none" stroke-width="2" stroke="' +
+        (open ? 'var(--accent-hi)' : 'var(--ink-3)') + '"' +
+        (open ? '' : ' stroke-dasharray="3 4" opacity=".55"') + '/>');
+
+      if (open){
+        var back = n.nextElementSibling;
+        var to = discs[+n.dataset.to];
+        var br = back.getBoundingClientRect();
+        var sx = br.left - box.left, sy = br.top - box.top + br.height / 2;
+        var forward = (+n.dataset.to) > (+n.dataset.p);
+        var ex = to.x, ey = to.y + (forward ? -(to.r + 8) : (to.r + 8));
+        parts.push('<path class="flow" d="M' + sx + ',' + sy + ' C' + (sx - 24) + ',' + sy +
+          ' ' + ex + ',' + (sy + (forward ? 26 : -26)) + ' ' + ex + ',' + ey +
+          '" fill="none" stroke="var(--ok)" stroke-width="2" stroke-dasharray="5 5" ' +
+          'marker-end="url(#kwArrow)"/>');
+      }
+    });
+
+    svg.innerHTML = '<defs><marker id="kwArrow" viewBox="0 0 8 8" refX="7" refY="4" ' +
+      'markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--ok)"/>' +
+      '</marker></defs>' + parts.join('');
+  }
+
+  document.querySelectorAll('[data-tab]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = b.dataset.tab;
+      $('p-bau').hidden = t !== 'bau';
+      $('p-karte').hidden = t !== 'karte';
+      document.querySelectorAll('[data-tab]').forEach(function(x){
+        x.setAttribute('aria-current', x.dataset.tab === t ? 'true' : 'false');
+      });
+      if (t === 'karte') requestAnimationFrame(drawWires);
+    });
+  });
+
+  if (window.ResizeObserver){
+    new ResizeObserver(function(){ drawWires(); }).observe($('mflow'));
+  } else {
+    window.addEventListener('resize', drawWires);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWires);
+
+  /* ---------- pitch: Aufnahmen (im Prototyp nachgestellt) ---------- */
+  function fmt(s){ return Math.floor(s/60) + ':' + ('0' + Math.floor(s%60)).slice(-2); }
+
+  function verdrahteAudio(scope){
+  (scope || document).querySelectorAll('.audio').forEach(function(row){
+    var wave = row.querySelector('.wave');
+    var btn = row.querySelector('.ab');
+    var dur = row.querySelector('.ad');
+    var isRec = btn.classList.contains('rec');
+    var bars = [];
+    for (var i = 0; i < 24; i++){
+      var el = document.createElement('i');
+      el.style.height = (isRec ? 3 : 6 + Math.round(Math.random()*18)) + 'px';
+      wave.appendChild(el); bars.push(el);
+    }
+    var state = isRec ? 'empty' : 'ready';
+    var len = isRec ? 0 : 9, timer = null, t = 0;
+
+    function stopAll(){ if (timer){ clearInterval(timer); timer = null; } wave.className = 'wave'; }
+
+    btn.addEventListener('click', function(){
+      if (timer){
+        stopAll();
+        if (state === 'recording'){
+          state = 'ready'; len = Math.max(1, t);
+          btn.classList.remove('rec','on'); btn.textContent = '▶';
+          btn.setAttribute('aria-label','Eigene Aufnahme abspielen');
+          dur.textContent = fmt(len);
+        } else { btn.textContent = '▶'; dur.textContent = fmt(len); }
+        return;
+      }
+      t = 0;
+      if (state === 'empty'){
+        state = 'recording'; btn.classList.add('on'); btn.textContent = '■';
+        btn.setAttribute('aria-label','Aufnahme stoppen');
+        wave.className = 'wave live';
+        timer = setInterval(function(){
+          t += 0.1;
+          dur.textContent = fmt(t);
+          bars.forEach(function(b){ b.style.height = (3 + Math.random()*20) + 'px'; });
+          if (t > 30){ btn.click(); }
+        }, 100);
+      } else {
+        btn.textContent = '■'; wave.className = 'wave play';
+        timer = setInterval(function(){
+          t += 0.1;
+          dur.textContent = fmt(Math.max(0, len - t));
+          var k = Math.floor(t/len*bars.length);
+          bars.forEach(function(b, j){ b.style.opacity = j <= k ? '1' : '.35'; });
+          if (t >= len){
+            stopAll(); btn.textContent = '▶'; dur.textContent = fmt(len);
+            bars.forEach(function(b){ b.style.opacity = '1'; });
+          }
+        }, 100);
+      }
+    });
+  });
+  }
+
+  /* ---------- ladder ---------- */
+
+  function eur(n){ return n.toLocaleString('de-DE') + ' €'; }
+
+  function renderLadder(){
+    var e = parseInt($('kEigen').value, 10) || 0;
+    var c = parseInt($('kCrew').value, 10) || 0;
+    var j = parseInt($('kJe').value, 10) || 0;
+    var html = '', nextFound = false;
+
+    RUNGS.forEach(function(r, i){
+      var miss = [];
+      if (e < r.eigen) miss.push(eur(r.eigen - e) + ' Eigenumsatz');
+      if (c < r.crew) miss.push((r.crew - c) + ' Junior Trainer');
+      if (r.je && j < r.je) miss.push(eur(r.je - j) + ' je Crew-Mitglied');
+      var hit = miss.length === 0;
+      var cls = hit ? 'hit' : (nextFound ? '' : 'next');
+      if (!hit) nextFound = true;
+      html += '<div class="rung ' + cls + '"><span class="num">' + (hit ? '✓' : (i+1)) + '</span><div>' +
+        '<b>' + r.n + '</b><p class="muted">' +
+        (hit ? 'Kriterien erfüllt' : 'Dir fehlen ' + miss.join(' und ') + '.') +
+        '</p></div></div>';
+    });
+    $('ladder').innerHTML = html;
+  }
+  ['kEigen','kCrew','kJe'].forEach(function(id){
+    $(id).addEventListener('input', renderLadder);
+  });
+
+
+
+  /* ================= Inhalte: Beispiel im Bundle, echtes Paket per Datei ========= */
+  var LESSONS = [];
+
+  function setzeLektion(){
+    var i = Math.max(0, Math.min(S.lektion || 0, LESSONS.length - 1));
+    var L = LESSONS[i];
+    QUESTIONS = L.aufgaben;
+    $('lessonKurs').textContent = L.kurs;
+    $('lessonTitel').textContent = L.titel;
+    $('lessonMeta').textContent = L.aufgaben.length + ' Aufgaben · etwa ' +
+      Math.max(2, Math.round(L.aufgaben.length * 0.9)) + ' Minuten' +
+      (LESSONS.length > 1 ? ' · Lektion ' + (i+1) + ' von ' + LESSONS.length : '');
+  }
+
+  function naechsteLektion(){
+    if ((S.lektion || 0) < LESSONS.length - 1) S.lektion = (S.lektion || 0) + 1;
+    setzeLektion();
+  }
+
+  var DEMO = {"kwfabrik":1,"name":"Beispielinhalte","stand":"","phasen":[{"n":"Vorstellung","s":"Vorstell.","need":0},{"n":"Kurzinfo","s":"Kurzinfo","need":15},{"n":"Präsentation","s":"Präsent.","need":35},{"n":"Abschluss","s":"Abschluss","need":60},{"n":"Absicherung","s":"Absicher.","need":75}],"stimmungen":{"abwehr":{"lines":["Ich hab gerade keine Zeit.","Kein Interesse.","Ich muss gleich weg."],"rlines":["Das ging mir jetzt zu schnell.","Eigentlich wollte ich nichts abschließen."]},"skepsis":{"lines":["Was kostet das wirklich?","Das sagen alle.","Wo ist der Haken?"],"rlines":["Da kommt nichts nach, oder?","Wer ruft mich da an?"]},"gleich":{"lines":["Läuft doch alles.","Brauch ich nicht.","Bin zufrieden."],"rlines":["Ja ja, passt schon.","Hm. Gut."]},"ausweichen":{"lines":["Das entscheide ich nicht allein.","Schicken Sie Unterlagen.","Ich überleg es mir."],"rlines":["Ich bespreche das nochmal.","Mal sehen."]}},"zuege":[{"empathie":"»Ich seh, Sie sind beschäftigt — ich halte Sie nicht lange auf.«","fakten":"»Mein Name ist [Name], ich bin im Auftrag von [Firma] unterwegs.«","nutzen":"»Ich habe etwas, womit Sie sparen können.«","fuehrung":"»Guten Tag — wohnen Sie hier im Haus?«"},{"empathie":"»Die meisten hier wussten davon nichts, deshalb gehe ich einmal durch.«","fakten":"»Bei Ihnen in der Straße passiert gerade [Anlass].«","nutzen":"»Damit hätten Sie [Vorteil].«","fuehrung":"»Zwei Sätze, dann wissen Sie, ob es für Sie relevant ist — in Ordnung?«"},{"empathie":"»Das kenne ich, das ist wirklich ärgerlich.«","fakten":"»Der Unterschied ist [Fakt], und deshalb [Folge].«","nutzen":"»Genau das ist Ihr Punkt: [Nutzen im Alltag des Kunden].«","fuehrung":"»Wie ist das bei Ihnen aktuell geregelt?«"},{"empathie":"»Ich merke, Sie sind noch nicht sicher — was fehlt Ihnen?«","fakten":"»Die Konditionen stehen auf dem Blatt, da ist nichts versteckt.«","nutzen":"»Dann haben Sie es abgehakt und müssen sich nicht mehr kümmern.«","fuehrung":"»Ich trage Sie ein, Sie bekommen alles schriftlich und haben 14 Tage Widerruf. Passt das?«"},{"empathie":"»Sie haben sich das in Ruhe angehört und sauber entschieden.«","fakten":"»Gleich meldet sich eine Kollegin und geht die Daten mit Ihnen durch.«","nutzen":"»Sagen Sie dort einfach das, was Sie mir gerade gesagt haben.«","fuehrung":"»Zwei Dinge noch: Der Anruf kommt heute, und schauen Sie ins Postfach.«"}],"profile":[{"n":"Vorsichtiger Kunde","h":"Will Belege statt Versprechen. Nimmt sich Zeit, wenn man ihn ernst nimmt."},{"n":"Kunde in Eile","h":"Geduld ist knapp. Wer nicht sofort auf den Punkt kommt, ist raus."},{"n":"Gut informierter Kunde","h":"Kennt die Zahlen selbst und merkt sofort, wenn etwas nicht stimmt."}],"lektion":{"kurs":"Beispielkurs · Einheit 1","titel":"Lektion 1 — So funktioniert das Training","aufgaben":[{"kind":"choice","lead":"Beispiel · Wissen","prompt":"Wofür ist der Verifikationsanruf da?","options":["Um dem Kunden etwas zusätzlich zu verkaufen","Um die Daten abzugleichen und den Grund der Entscheidung zu hören","Um einen Techniktermin zu vereinbaren"],"right":1,"stat":"witt","why":["Beispiel: Der Anruf ist kein Verkaufsgespräch — wer das behauptet, erzeugt Misstrauen.","Beispiel: Datenabgleich plus die Frage nach dem Grund. Genau darauf bereitest du den Kunden vor.","Beispiel: Der Techniktermin ist ein eigener Vorgang und kommt später."],"expl":"Beispielinhalt. Deine echten Fragen kommen über ein Inhaltspaket in die App — unter „Ich“ laden."},{"kind":"choice","lead":"Beispiel · Einwand","timer":12,"quote":"Ich hab jetzt keine Zeit.","prompt":"Welche Antwort bringt dich weiter?","options":["»Das dauert nur ganz kurz.«","»Verstehe — deshalb frage ich gar nicht nach zehn Minuten. Zwei Fragen, dann wissen Sie Bescheid.«","»Wann hätten Sie denn Zeit?«"],"right":1,"stat":"panzer","why":["Beispiel: »Ganz kurz« ist unkonkret und wird deshalb nicht geglaubt.","Beispiel: Erst anerkennen, dann den Aufwand konkret kleiner machen als befürchtet.","Beispiel: Die Terminfrage gibt das Gespräch ab, bevor ein Grund zum Wiederkommen entstanden ist."],"expl":"Beispielinhalt. Erst anerkennen, dann den Aufwand konkret kleiner machen als befürchtet."},{"kind":"order","lead":"Beispiel · Aufbau","prompt":"Bring die Phasen in die richtige Reihenfolge.","items":["Präsentation","Vorstellung","Absicherung","Kurzinfo","Abschluss"],"order":[1,3,0,4,2],"stat":"wucht","expl":"Beispielinhalt. Die Reihenfolge und die Begriffe legt dein Inhaltspaket fest."}]},"karte":[{"n":"Vorstellung","sub":"Gruß · Auftrag · Anlass","d":[{"a":"Fragt sofort nach dem Preis","to":0,"r":"Beispiel: Nennen verschieben, eine Bedarfsfrage dazwischenschieben.","b":"zurück auf Anlass"}]},{"n":"Kurzinfo","sub":"Anlass · Betroffenheit · Erlaubnis","d":[{"a":"Will nur die Unterlagen","to":1,"r":"Beispiel: Unterlagen zusagen, aber vorher herausfinden, was dem Kunden wichtig ist.","b":"zurück auf Erlaubnis"}]},{"n":"Präsentation","sub":"Bedarf · Nutzen · Grund festhalten","d":[{"a":"Frage, die du nicht beantworten kannst","to":2,"r":"Beispiel: Nichts erfinden, an den Verifikationsanruf abgeben, zurück zum Nutzen.","b":"zurück auf Nutzen"},{"a":"Will sofort abschließen","to":3,"r":"Beispiel: Mitgehen, aber den Grund vorher festhalten — er wird am Telefon gebraucht.","b":"weiter auf Abschluss"}]},{"n":"Abschluss","sub":"Frage · Daten · Widerruf","d":[{"a":"Zögert und sagt nichts","to":3,"r":"Beispiel: Stille aushalten, dann fragen, was ihn noch hält.","b":"zurück auf Frage stellen"}]},{"n":"Absicherung","sub":"Bestätigen · Anruf ankündigen · Grund wiederholen","d":[{"a":"Wird nach der Unterschrift still","to":4,"r":"Beispiel: Den Kunden seinen Grund selbst aussprechen lassen.","b":"zurück auf Grund wiederholen"}]}],"pitch":{"titel":"Beispiel-Pitch","quelle":"Beispiel","bloecke":[{"t":"Aufhänger","x":"Der erste Satz an der Tür. Kurz, konkret, und er endet mit einer Frage.","audio":2},{"t":"Rahmen","x":"Wer bist du, warum stehst du hier, wie lange dauert es.","audio":1},{"t":"Bedarfsfragen","x":"Zwei bis drei Fragen, deren Antworten du später für den Nutzen brauchst."},{"t":"Nutzen","x":"Keine technischen Daten, sondern der Unterschied im Alltag des Kunden.","hinweis":"Dieser Satz ist der Grund, den der Kunde beim Verifikationsanruf nennen soll."},{"t":"Abschluss","x":"Die Frage wirklich stellen, Widerrufsfrist nennen."},{"t":"Absicherung","x":"Entscheidung bestätigen, Verifikationsanruf ankündigen, Grund wiederholen lassen."},{"t":"Einwandkarten","x":"Je Einwand eine Karte: der Einwand und deine Antwort darauf."}]},"pfad":{"kurs":"Beispielkurs","lead":"So sieht ein Lernpfad aus. Die echten Einheiten kommen mit deinem Inhaltspaket.","einheiten":[{"n":"1 · Grundlagen","t":"Beispiel-Einheit — abgeschlossen","state":"done"},{"n":"2 · Einwände","t":"Beispiel-Einheit — als Nächstes dran","state":"now","pct":29},{"n":"3 · Abschluss","t":"Beispiel-Einheit","state":"open"},{"n":"Szenario","t":"Verzweigtes Gespräch. Öffnet sich später.","state":"star"}]},"leiter":[{"n":"Stufe 1","eigen":2000,"crew":0,"je":0},{"n":"Stufe 2","eigen":2500,"crew":1,"je":1200},{"n":"Stufe 3","eigen":2500,"crew":3,"je":2000},{"n":"Stufe 4","eigen":3000,"crew":4,"je":2000}]};
+  var CKEY = 'kwfabrik.content';
+  var C = DEMO;
+
+  function ladeInhalt(){
+    var raw = null;
+    try { raw = localStorage.getItem(CKEY); } catch (e) { return; }
+    if (!raw) return;
+    try {
+      var d = JSON.parse(raw);
+      if (pruefePaket(d)) C = d;
+    } catch (e) { /* kaputt gespeichert — Beispielinhalte bleiben */ }
+  }
+
+  function pruefePaket(d){
+    return !!d && d.kwfabrik === 1 &&
+      Array.isArray(d.phasen) && d.phasen.length === 5 &&
+      Array.isArray(d.zuege) && d.zuege.length === 5 &&
+      Array.isArray(d.karte) && Array.isArray(d.leiter) &&
+      ((d.lektion && Array.isArray(d.lektion.aufgaben)) ||
+       (Array.isArray(d.lektionen) && d.lektionen.length &&
+        d.lektionen.every(function(l){ return l && Array.isArray(l.aufgaben) && l.aufgaben.length; }))) &&
+      d.pitch && Array.isArray(d.pitch.bloecke) && d.stimmungen;
+  }
+
+  function wendeInhaltAn(){
+    PHASES = C.phasen; MOVES = C.zuege; PROFILES = C.profile || DEMO.profile;
+    LESSONS = (C.lektionen && C.lektionen.length) ? C.lektionen : [C.lektion];
+    MAP = C.karte; RUNGS = C.leiter;
+    setzeLektion();
+    MOODKEYS.forEach(function(k){
+      var s = (C.stimmungen && C.stimmungen[k]) || DEMO.stimmungen[k];
+      MOODS[k].lines = s.lines; MOODS[k].rlines = s.rlines;
+    });
+    var echt = C !== DEMO;
+    $('packChip').textContent = C.name || 'Inhaltspaket';
+    $('packChip').className = 'chip' + (echt ? ' ok' : '');
+    $('packTxt').textContent = echt
+      ? 'Geladen: ' + C.name + (C.stand ? ', Stand ' + C.stand : '') + '. Liegt nur auf diesem Gerät.'
+      : 'Die App wird mit Beispielinhalten ausgeliefert. Dein Trainer schickt dir das echte Paket als Datei — hier laden.';
+    $('btnPackReset').hidden = !echt;
+    $('pitchQuelle').textContent = C.pitch.quelle || 'Pitch';
+    $('pitchTitel').textContent = C.pitch.titel + (C.stand ? ' — Stand ' + C.stand : '');
+    $('planFolge').textContent = PHASES.map(function(p){ return p.n; }).join(' → ') +
+      '. Jede Phase öffnet sich erst ab einem Vertrauenswert. Wer vorgreift, verliert Geduld und kommt trotzdem nicht weiter.';
+    $('planLetzte').textContent = PHASES[4].n +
+      (PHASES[4].alt ? ' (auch: ' + PHASES[4].alt + ')' : '') + ' entscheidet.';
+    renderPitch(); renderMap(); renderLadder(); renderPfad();
+  }
+
+  var STUFEN = [
+    { n:'Kälbchen', bis:100 }, { n:'Jährling', bis:250 }, { n:'Bulle', bis:500 },
+    { n:'Narbenbulle', bis:900 }, { n:'Leitbulle', bis:Infinity }
+  ];
+
+  function renderRhino(){
+    var i = 0;
+    while (i < STUFEN.length - 1 && S.xp >= STUFEN[i].bis) i++;
+    var von = i === 0 ? 0 : STUFEN[i-1].bis;
+    var bis = STUFEN[i].bis;
+    $('rhinoStufe').textContent = STUFEN[i].n + ' · Stufe ' + (i+1);
+    $('rhinoNext').textContent = bis === Infinity
+      ? 'Höchste Stufe erreicht — ' + S.xp + ' Trainingspunkte'
+      : S.xp + ' von ' + bis + ' Trainingspunkten bis ' + STUFEN[i+1].n;
+    $('rhinoBar').style.width = (bis === Infinity ? 100
+      : Math.round((S.xp - von) / (bis - von) * 100)) + '%';
+
+    var v = [];
+    if (S.streak >= 30) v.push(['ok','Stahlhaut']);
+    else v.push(['','Stahlhaut · ' + (30 - S.streak) + ' Tage fehlen']);
+    if (S.xp >= 300) v.push(['ok','Silberhorn']);
+    else v.push(['','Silberhorn · fehlt']);
+    $('rhinoVar').innerHTML = v.map(function(x){
+      return '<span class="chip ' + x[0] + '">' + x[1] + '</span>';
+    }).join('');
+  }
+
+  function renderPfad(){
+    var p = C.pfad || DEMO.pfad;
+    $('pfadKurs').textContent = p.kurs;
+    $('pfadLead').textContent = p.lead;
+    var box = $('pfadBox');
+    box.innerHTML = '';
+    p.einheiten.forEach(function(e, i){
+      var letzte = i === p.einheiten.length - 1;
+      var node = document.createElement('div');
+      node.className = 'node';
+      var mark = e.state === 'done' ? '✓' : (e.state === 'star' ? '★' : (i+1));
+      var cls = e.state === 'done' ? 'done' : (e.state === 'now' ? 'now' : '');
+      node.innerHTML = '<div class="rail"><div class="dot ' + cls + '">' + mark + '</div>' +
+        (letzte ? '' : '<div class="ln' + (e.state === 'done' ? ' done' : '') + '"></div>') + '</div>';
+      var body = document.createElement('div');
+      body.className = 'body';
+      var b = document.createElement('b'); b.textContent = e.n; body.appendChild(b);
+      var t = document.createElement('p'); t.className = 'muted'; t.textContent = e.t; body.appendChild(t);
+      if (typeof e.pct === 'number'){
+        body.insertAdjacentHTML('beforeend',
+          '<div class="bar" style="margin-top:9px;max-width:190px"><i style="width:' + e.pct + '%"></i></div>');
+      }
+      node.appendChild(body);
+      box.appendChild(node);
+    });
+  }
+
+
+  /* ================= Pitch-Editor ================= */
+  var PKEY = 'kwfabrik.pitches';
+  var PITCHES = { aktiv:'', liste:[] };
+  var offen = {};          // welcher Baustein ist aufgeklappt
+  var rueckgaengig = null; // letzte Löschung
+  var toastTimer = null;
+
+  function ladePitches(){
+    try {
+      var r = localStorage.getItem(PKEY);
+      if (r){
+        var d = JSON.parse(r);
+        if (d && Array.isArray(d.liste)) PITCHES = d;
+      }
+    } catch (e) { /* kaputt oder gesperrt — eigene Pitches bleiben leer */ }
+  }
+  function sicherePitches(){
+    try { localStorage.setItem(PKEY, JSON.stringify(PITCHES)); } catch (e) {}
+  }
+
+  function offiziell(){
+    return { id:'offiziell', titel:C.pitch.titel, quelle:C.pitch.quelle || 'offiziell',
+             bloecke:C.pitch.bloecke, fest:true };
+  }
+  function allePitches(){ return [offiziell()].concat(PITCHES.liste); }
+  function aktiverPitch(){
+    var a = allePitches();
+    for (var i = 0; i < a.length; i++) if (a[i].id === PITCHES.aktiv) return a[i];
+    return a[0];
+  }
+
+  function eigeneKopie(){
+    var o = aktiverPitch();
+    var neu = {
+      id: 'p' + Date.now(),
+      titel: o.titel + ' — meine Fassung',
+      quelle: 'eigen', basis: o.titel, stand: heute(),
+      bloecke: JSON.parse(JSON.stringify(o.bloecke))
+    };
+    PITCHES.liste.push(neu); PITCHES.aktiv = neu.id; sicherePitches();
+    return neu;
+  }
+
+  /* Vor jeder Änderung: offizielle Fassung bleibt, es wird kopiert. */
+  function sicherstellenEigen(){
+    var p = aktiverPitch();
+    if (!p.fest) return p;
+    var neu = eigeneKopie();
+    zeigeToast('Der offizielle Pitch bleibt unverändert — du bearbeitest jetzt deine eigene Kopie.', null);
+    return neu;
+  }
+
+  function neuerPitch(){
+    var namen = PHASES.map(function(ph){ return ph.n; });
+    var neu = {
+      id: 'p' + Date.now(), titel: 'Mein Pitch', quelle: 'eigen', stand: heute(),
+      bloecke: namen.map(function(n){ return { t:n, x:'' }; })
+        .concat([{ t:'Einwandkarten', karten:[] }])
+    };
+    PITCHES.liste.push(neu); PITCHES.aktiv = neu.id; sicherePitches();
+    offen = { 0:true };
+    renderPitch();
+  }
+
+  function zeigeToast(txt, aktion){
+    $('toastTxt').textContent = txt;
+    $('toastAct').hidden = !aktion;
+    rueckgaengig = aktion;
+    $('toast').hidden = false;
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ $('toast').hidden = true; rueckgaengig = null; }, 7000);
+  }
+  $('toastAct').addEventListener('click', function(){
+    if (rueckgaengig) rueckgaengig();
+    $('toast').hidden = true; rueckgaengig = null;
+  });
+
+  /* ---- Kopfzeile mit allen Pitches ---- */
+  function renderPitchBar(){
+    var bar = $('pitchBar');
+    bar.innerHTML = '';
+    var aktiv = aktiverPitch();
+    allePitches().forEach(function(p){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = p.fest ? 'Offiziell' : p.titel;
+      b.setAttribute('aria-current', p.id === aktiv.id ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        PITCHES.aktiv = p.id; sicherePitches(); offen = { 0:true }; renderPitch();
+      });
+      bar.appendChild(b);
+    });
+    var n = document.createElement('button');
+    n.type = 'button'; n.className = 'neu'; n.textContent = '+ Neu';
+    n.addEventListener('click', neuerPitch);
+    bar.appendChild(n);
+  }
+
+  /* ---- Bausteine ---- */
+  function renderPitch(){
+    ladePitchesEinmal();
+    var p = aktiverPitch();
+    renderPitchBar();
+    $('pitchQuelle').textContent = p.fest ? (p.quelle || 'offiziell') : 'eigene Fassung';
+    $('pitchQuelle').className = 'chip' + (p.fest ? ' acc' : '');
+    $('pitchTitel').textContent = p.titel + (p.fest && C.stand ? ' — Stand ' + C.stand : '');
+    $('pitchDelete').hidden = !!p.fest;
+
+    var box = $('p-bau');
+    box.innerHTML = '';
+
+    if (p.fest){
+      var ro = document.createElement('p');
+      ro.className = 'readonly';
+      ro.textContent = 'Offizieller Pitch — jede Änderung legt automatisch deine eigene Kopie an';
+      box.appendChild(ro);
+    }
+
+    p.bloecke.forEach(function(b, i){
+      box.appendChild(baustein(p, b, i));
+    });
+    verdrahteAudio(box);
+  }
+
+  function baustein(p, b, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'block'; wrap.dataset.i = i;
+    var auf = !!offen[i];
+
+    var head = document.createElement('button');
+    head.type = 'button'; head.setAttribute('data-block','');
+    head.setAttribute('aria-expanded', auf ? 'true' : 'false');
+    var ht = document.createElement('span');
+    ht.textContent = b.t + (b.karten ? ' · ' + b.karten.length : '');
+    head.appendChild(ht);
+    var tw = document.createElement('span'); tw.className = 'tw'; tw.textContent = auf ? '−' : '+';
+    head.appendChild(tw);
+    head.addEventListener('click', function(){ offen[i] = !offen[i]; renderPitch(); });
+    wrap.appendChild(head);
+
+    var inner = document.createElement('div');
+    inner.className = 'inner'; inner.hidden = !auf;
+
+    if (b.karten) karteiBereich(p, b, i, inner);
+    else textBereich(p, b, i, inner);
+
+    wrap.appendChild(inner);
+    return wrap;
+  }
+
+  function textBereich(p, b, i, inner){
+    var txt = document.createElement('span');
+    txt.textContent = b.x || 'Noch kein Text. Tippe auf Ändern.';
+    if (!b.x) txt.style.color = 'var(--ink-3)';
+    inner.appendChild(txt);
+
+    if (b.hinweis){
+      var hv = document.createElement('p');
+      hv.className = 'muted'; hv.style.marginTop = '8px'; hv.textContent = b.hinweis;
+      inner.appendChild(hv);
+    }
+    for (var a = 0; a < (b.audio || 0); a++) inner.appendChild(audioZeile(b.audio === 2 && a === 0));
+
+    var act = document.createElement('div'); act.className = 'blockact';
+    var edit = document.createElement('button');
+    edit.type = 'button'; edit.className = 'btn sec klein'; edit.textContent = 'Text ändern';
+    edit.addEventListener('click', function(){ oeffneEditor(i, b.t, b.x || '', null); });
+    act.appendChild(edit);
+    inner.appendChild(act);
+  }
+
+  function oeffneEditor(i, titel, wert, kartenIndex){
+    var p = sicherstellenEigen();
+    var b = p.bloecke[i];
+    offen[i] = true;
+    renderPitch();
+    var wrap = $('p-bau').querySelector('.block[data-i="' + i + '"]');
+    if (!wrap) return;
+    var inner = wrap.querySelector('.inner');
+    inner.hidden = false;
+    inner.innerHTML = '';
+
+    function feld(label, text, rows){
+      var l = document.createElement('label'); l.className = 'talabel'; l.textContent = label;
+      var t = document.createElement('textarea'); t.className = 'ta'; t.value = text;
+      if (rows) t.style.minHeight = rows + 'px';
+      inner.appendChild(l); inner.appendChild(t);
+      return t;
+    }
+
+    var f1, f2;
+    if (kartenIndex === null){
+      f1 = feld(titel, wert);
+    } else {
+      var k = b.karten[kartenIndex];
+      f1 = feld('Einwand des Kunden', k.e, 60);
+      f2 = feld('Deine Antwort', k.a);
+    }
+
+    var act = document.createElement('div'); act.className = 'blockact';
+    var ok = document.createElement('button');
+    ok.className = 'btn klein'; ok.type = 'button'; ok.textContent = 'Sichern';
+    var ab = document.createElement('button');
+    ab.className = 'btn sec klein'; ab.type = 'button'; ab.textContent = 'Verwerfen';
+    act.appendChild(ok); act.appendChild(ab);
+    inner.appendChild(act);
+
+    ok.addEventListener('click', function(){
+      var akt = aktiverPitch();
+      if (kartenIndex === null) akt.bloecke[i].x = f1.value.trim();
+      else {
+        akt.bloecke[i].karten[kartenIndex].e = f1.value.trim();
+        akt.bloecke[i].karten[kartenIndex].a = f2.value.trim();
+      }
+      akt.stand = heute();
+      sicherePitches(); renderPitch();
+    });
+    ab.addEventListener('click', renderPitch);
+    f1.focus();
+  }
+
+  /* ---- Einwandkarten ---- */
+  function karteiBereich(p, b, i, inner){
+    if (!b.karten.length){
+      var leer = document.createElement('p');
+      leer.className = 'muted';
+      leer.textContent = 'Noch keine Einwandkarten. Je Karte ein Einwand und deine Antwort darauf.';
+      inner.appendChild(leer);
+    }
+
+    var liste = document.createElement('div'); liste.className = 'kartenliste';
+    b.karten.forEach(function(k, ki){
+      var el = document.createElement('div'); el.className = 'kartei';
+      var e = document.createElement('span'); e.className = 'ke'; e.textContent = '»' + k.e + '«';
+      var a = document.createElement('span'); a.className = 'ka'; a.textContent = k.a;
+      el.appendChild(e); el.appendChild(a);
+
+      var act = document.createElement('div'); act.className = 'kact';
+      var ed = document.createElement('button');
+      ed.type = 'button'; ed.className = 'btn sec klein'; ed.textContent = 'Ändern';
+      ed.addEventListener('click', function(){ oeffneEditor(i, b.t, '', ki); });
+      var del = document.createElement('button');
+      del.type = 'button'; del.className = 'btn sec klein'; del.textContent = 'Löschen';
+      del.addEventListener('click', function(){ loescheKarte(i, ki); });
+      act.appendChild(ed); act.appendChild(del);
+      el.appendChild(act);
+      liste.appendChild(el);
+    });
+    inner.appendChild(liste);
+
+    var add = document.createElement('div'); add.className = 'blockact';
+    var nb = document.createElement('button');
+    nb.type = 'button'; nb.className = 'btn sec klein'; nb.textContent = 'Einwandkarte hinzufügen';
+    nb.addEventListener('click', function(){
+      var akt = sicherstellenEigen();
+      akt.bloecke[i].karten.push({ e:'Neuer Einwand', a:'' });
+      akt.stand = heute(); sicherePitches(); offen[i] = true; renderPitch();
+      oeffneEditor(i, akt.bloecke[i].t, '', akt.bloecke[i].karten.length - 1);
+    });
+    add.appendChild(nb);
+    inner.appendChild(add);
+  }
+
+  /* Eine Karte ist billig wiederhergestellt — also sofort weg, dafür mit Rückgängig. */
+  function loescheKarte(i, ki){
+    var p = sicherstellenEigen();
+    var weg = p.bloecke[i].karten.splice(ki, 1)[0];
+    p.stand = heute(); sicherePitches(); offen[i] = true; renderPitch();
+    zeigeToast('Einwandkarte »' + weg.e + '« gelöscht.', function(){
+      var akt = aktiverPitch();
+      akt.bloecke[i].karten.splice(ki, 0, weg);
+      sicherePitches(); renderPitch();
+    });
+  }
+
+  function audioZeile(mentor){
+    var row = document.createElement('div');
+    row.className = 'audio';
+    row.innerHTML = '<button class="ab' + (mentor ? '' : ' rec') + '" aria-label="' +
+      (mentor ? 'Musteraufnahme abspielen' : 'Eigene Aufnahme starten') + '">' +
+      (mentor ? '▶' : '●') + '</button><span class="al">' + (mentor ? 'Mentor' : 'Du') +
+      '</span><span class="wave" aria-hidden="true"></span><span class="ad">' +
+      (mentor ? '0:09' : '—') + '</span>';
+    return row;
+  }
+
+  /* ---- eigene Fassung löschen ---- */
+  $('pitchDelete').addEventListener('click', function(){
+    var p = aktiverPitch();
+    if (p.fest) return;
+    var idx = PITCHES.liste.indexOf(p);
+    PITCHES.liste.splice(idx, 1);
+    PITCHES.aktiv = 'offiziell'; sicherePitches(); renderPitch();
+    zeigeToast('»' + p.titel + '« gelöscht.', function(){
+      PITCHES.liste.splice(idx, 0, p);
+      PITCHES.aktiv = p.id; sicherePitches(); renderPitch();
+    });
+  });
+
+  var pitchesGeladen = false;
+  function ladePitchesEinmal(){
+    if (pitchesGeladen) return;
+    ladePitches(); pitchesGeladen = true;
+  }
+
+
+  /* ---- Paket laden, weitergeben, verwerfen ---- */
+  $('btnPackLoad').addEventListener('click', function(){ $('filePack').click(); });
+  $('filePack').addEventListener('change', function(){
+    var f = this.files && this.files[0];
+    this.value = '';
+    if (!f) return;
+    var fr = new FileReader();
+    fr.onload = function(){
+      var d;
+      try { d = JSON.parse(String(fr.result)); }
+      catch (e){ $('packMsg').textContent = 'Die Datei ließ sich nicht lesen. Ist das wirklich ein Inhaltspaket?'; return; }
+      if (d && d.typ === 'pitch' && d.pitch && Array.isArray(d.pitch.bloecke)){
+        ladePitchesEinmal();
+        var imp = { id:'p' + Date.now(), titel:d.pitch.titel || 'Geteilter Pitch',
+                    quelle:'geteilt', stand:d.pitch.stand || '', bloecke:d.pitch.bloecke };
+        PITCHES.liste.push(imp); PITCHES.aktiv = imp.id; sicherePitches();
+        renderPitch();
+        $('packMsg').textContent = 'Pitch »' + imp.titel + '« übernommen — unter Pitch zu finden.';
+        return;
+      }
+      if (!pruefePaket(d)){
+        $('packMsg').textContent = 'Das ist kein gültiges Inhaltspaket — es fehlen Teile. Nichts geändert.';
+        return;
+      }
+      C = d;
+      try { localStorage.setItem(CKEY, JSON.stringify(d)); } catch (e) {}
+      wendeInhaltAn();
+      $('packMsg').textContent = 'Geladen: ' + (d.name || 'Paket') + '.';
+    };
+    fr.readAsText(f);
+  });
+
+  function teile(obj, basisname, meldung){
+    var txt = JSON.stringify(obj, null, 2);
+    var name = basisname.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '.kwf';
+    var file = null;
+    try { file = new File([txt], name, { type:'application/json' }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files:[file] })){
+      navigator.share({ files:[file], title:'KW Fabrik' }).catch(function(){});
+      return;
+    }
+    var blob = new Blob([txt], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+    zeigeToast(meldung + ' als ' + name + ' gespeichert.', null);
+  }
+
+  $('sharePitch').addEventListener('click', function(){
+    var p = aktiverPitch();
+    teile({ kwfabrik:1, typ:'pitch', pitch:{ titel:p.titel, quelle:p.quelle, stand:p.stand || '', bloecke:p.bloecke } },
+          p.titel, 'Pitch');
+  });
+
+  $('btnPackShare').addEventListener('click', function(){
+    var txt = JSON.stringify(C, null, 2);
+    var name = (C.name || 'inhalte').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '.kwf';
+    var file = null;
+    try { file = new File([txt], name, { type:'application/json' }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files:[file] })){
+      navigator.share({ files:[file], title:'KW Fabrik Inhaltspaket' }).catch(function(){});
+      return;
+    }
+    var blob = new Blob([txt], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+    $('packMsg').textContent = 'Als ' + name + ' gespeichert — per WhatsApp oder AirDrop weitergeben.';
+  });
+
+  $('btnPackReset').addEventListener('click', function(){
+    try { localStorage.removeItem(CKEY); } catch (e) {}
+    C = DEMO; wendeInhaltAn();
+    $('packMsg').textContent = 'Zurück auf Beispielinhalte. Dein Fortschritt bleibt.';
+  });
+
+  /* ================= Speichern, Sichern, Installieren ================= */
+  var KEY = 'kwfabrik.v1';
+
+  function heute(){ return new Date().toISOString().slice(0,10); }
+  function tageSeit(ms){ return Math.floor((Date.now() - ms) / 864e5); }
+
+  function persist(){
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* privater Modus */ }
+  }
+
+  function restore(){
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    var d;
+    try { d = JSON.parse(raw); } catch (e) { return; }
+    if (!d || typeof d !== 'object') return;
+    Object.keys(S).forEach(function(k){
+      if (typeof d[k] === typeof S[k]) S[k] = d[k];
+    });
+    var t = heute();
+    var gestern = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+    if (S.lastDay !== t){
+      S.goal = 0;
+      if (S.lastDay !== gestern) S.streak = 0;
+    }
+  }
+
+  function markGoal(){
+    var t = heute();
+    if (S.lastDay === t){ S.goal = 1; return; }
+    var gestern = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+    S.streak = (S.lastDay === gestern) ? S.streak + 1 : 1;
+    S.lastDay = t;
+    S.goal = 1;
+  }
+
+  /* ---- Sichern ---- */
+  function exportieren(){
+    var blob = new Blob([JSON.stringify(S, null, 2)], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'kw-fabrik-sicherung-' + heute() + '.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+    S.lastBackup = Date.now();
+    renderStats(); renderBackup();
+  }
+
+  function importieren(file){
+    var fr = new FileReader();
+    fr.onload = function(){
+      var d;
+      try { d = JSON.parse(String(fr.result)); }
+      catch (e){ $('storageTxt').textContent = 'Die Datei ließ sich nicht lesen — ist das eine Sicherung aus dieser App?'; return; }
+      if (!d || typeof d !== 'object' || typeof d.xp !== 'number'){
+        $('storageTxt').textContent = 'Das sieht nicht nach einer Sicherung dieser App aus. Nichts geändert.';
+        return;
+      }
+      Object.keys(S).forEach(function(k){ if (typeof d[k] === typeof S[k]) S[k] = d[k]; });
+      renderStats(); renderLadder(); renderBackup();
+      $('storageTxt').textContent = 'Sicherung eingelesen: ' + S.xp + ' Punkte, ' + S.streak + ' Tage Serie.';
+    };
+    fr.readAsText(file);
+  }
+
+  function renderBackup(){
+    var chip = $('backupChip'), nag = $('backupNag');
+    if (!S.lastBackup){
+      chip.textContent = 'nie gesichert';
+      chip.className = 'chip';
+    } else {
+      var d = tageSeit(S.lastBackup);
+      chip.textContent = d === 0 ? 'heute gesichert' : 'vor ' + d + (d === 1 ? ' Tag' : ' Tagen');
+      chip.className = 'chip' + (d > 14 ? '' : ' ok');
+    }
+    var lohnt = S.xp >= 60 || S.streak >= 3;
+    var faellig = !S.lastBackup || tageSeit(S.lastBackup) > 14;
+    var zuletztGenervt = 0;
+    try { zuletztGenervt = +(localStorage.getItem(KEY + '.nag') || 0); } catch (e) {}
+    nag.hidden = !(lohnt && faellig && tageSeit(zuletztGenervt) > 7);
+    if (!nag.hidden){
+      $('backupNagTxt').textContent = S.lastBackup
+        ? 'Letzte Sicherung vor ' + tageSeit(S.lastBackup) + ' Tagen. Du hast inzwischen ' + S.xp + ' Punkte drin.'
+        : 'Du hast ' + S.xp + ' Punkte und ' + S.streak + ' Tage Serie — bisher ungesichert.';
+      try { localStorage.setItem(KEY + '.nag', String(Date.now())); } catch (e) {}
+    }
+  }
+
+  $('btnExport').addEventListener('click', exportieren);
+  $('btnNagExport').addEventListener('click', function(){ exportieren(); $('backupNag').hidden = true; });
+  $('btnImport').addEventListener('click', function(){ $('fileImport').click(); });
+  $('fileImport').addEventListener('change', function(){
+    if (this.files && this.files[0]) importieren(this.files[0]);
+    this.value = '';
+  });
+
+  /* ---- Zurücksetzen: zwei Schritte, mit Zahlen ---- */
+  var resetArmed = 0;
+  $('btnReset').addEventListener('click', function(){
+    var b = this;
+    if (Date.now() - resetArmed < 6000){
+      try { localStorage.removeItem(KEY); localStorage.removeItem(KEY + '.nag'); } catch (e) {}
+      S.streak = 0; S.due = 0; S.xp = 0; S.goal = 0;
+      S.wucht = 0; S.panzer = 0; S.witt = 0; S.aus = 0;
+      S.lastDay = ''; S.lastBackup = 0;
+      resetArmed = 0; b.textContent = 'Zurückgesetzt';
+      renderStats(); renderLadder(); renderBackup();
+      setTimeout(function(){ b.textContent = 'Zurücksetzen'; }, 2500);
+      return;
+    }
+    resetArmed = Date.now();
+    b.textContent = 'Wirklich? ' + S.xp + ' Punkte und ' + S.streak + ' Tage Serie löschen';
+    setTimeout(function(){
+      if (Date.now() - resetArmed >= 6000 && b.textContent.indexOf('Wirklich') === 0){
+        b.textContent = 'Zurücksetzen'; resetArmed = 0;
+      }
+    }, 6200);
+  });
+
+  /* ---- Installieren ---- */
+  var installEvent = null;
+  var installiert = window.matchMedia('(display-mode: standalone)').matches ||
+                    window.navigator.standalone === true;
+  var istIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var nichtMehr = false;
+  try { nichtMehr = localStorage.getItem(KEY + '.noinstall') === '1'; } catch (e) {}
+
+  function zeigeInstall(){
+    if (installiert || nichtMehr) return;
+    if (istIOS){
+      $('installTxt').textContent = 'Tippe unten auf Teilen und dann auf „Zum Home-Bildschirm“. Dann läuft die App im Vollbild — und dein Fortschritt wird nicht mehr nach sieben Tagen gelöscht.';
+      $('installCard').hidden = false;
+    } else if (installEvent){
+      $('btnInstall').hidden = false;
+      $('installCard').hidden = false;
+    }
+  }
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); installEvent = e; zeigeInstall();
+  });
+
+  $('btnInstall').addEventListener('click', function(){
+    if (!installEvent) return;
+    installEvent.prompt();
+    installEvent.userChoice.then(function(){ installEvent = null; $('installCard').hidden = true; });
+  });
+
+  $('btnInstallClose').addEventListener('click', function(){
+    $('installCard').hidden = true;
+    try { localStorage.setItem(KEY + '.noinstall', '1'); } catch (e) {}
+  });
+
+  window.addEventListener('appinstalled', function(){
+    installiert = true; $('installCard').hidden = true;
+  });
+
+  /* ---- Speicher dauerhaft anfordern ---- */
+  function speicherStatus(){
+    var el = $('storageTxt');
+    if (!navigator.storage || !navigator.storage.persist){
+      el.textContent = installiert ? '' : 'Tipp: Auf dem Homescreen installiert bleiben die Daten zuverlässiger erhalten.';
+      return;
+    }
+    navigator.storage.persist().then(function(ok){
+      el.textContent = ok
+        ? 'Der Browser hat zugesagt, diese Daten nicht von selbst zu löschen.'
+        : 'Der Browser kann die Daten bei Platzmangel löschen. Auf dem Homescreen installiert ist das deutlich unwahrscheinlicher.';
+    }).catch(function(){ el.textContent = ''; });
+  }
+
+  /* ---- Service Worker ---- */
+  if ('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){ /* z. B. file:// */ });
+    });
+  }
+
+  restore();        // zuerst, sonst kennt setzeLektion() den gespeicherten Stand nicht
+  ladeInhalt();
+  wendeInhaltAn();
+  renderBackup();
+  speicherStatus();
+  zeigeInstall();
+
+  renderStats();
+})();
+</script>
+</body>
+</html>

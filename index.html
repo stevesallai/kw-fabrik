@@ -219,7 +219,11 @@ p{margin:0}
 
 /* ---------- sheet ---------- */
 .sheet{position:absolute; inset:0; background:rgba(4,10,24,.72); display:flex; align-items:flex-end; z-index:8}
-.sheet .inner{background:var(--surface); width:100%; border-radius:18px 18px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:11px}
+.sheet .inner{background:var(--surface); width:100%; border-radius:18px 18px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:11px; max-height:88%; overflow-y:auto; overscroll-behavior:contain}
+.sheet .inner > *{flex:0 0 auto}
+#sheetOpts{display:flex; flex-direction:column; gap:9px}
+.shareopt[aria-pressed="true"]{border-color:var(--accent); background:var(--surface-2)}
+.shareopt[aria-pressed="true"] .ic{background:var(--accent); color:var(--on-accent)}
 .shareopt{display:flex; align-items:center; gap:12px; width:100%; background:var(--sunk); border:1px solid var(--line); border-radius:11px; padding:12px 13px; min-height:52px; color:var(--ink); cursor:pointer; text-align:left; font-family:var(--body); font-size:14px}
 .shareopt .ic{width:34px; height:34px; border-radius:9px; background:var(--surface-2); display:grid; place-items:center; flex:none; font-family:var(--data); font-size:11px; font-weight:700; color:var(--accent-hi)}
 .shareopt small{display:block; color:var(--ink-3); font-size:11.5px; line-height:1.4}
@@ -274,6 +278,31 @@ p{margin:0}
 @media (prefers-reduced-motion:reduce){.wires .flow{animation-name:none}}
 
 .audio{display:flex; align-items:center; gap:10px; background:var(--sunk); border-radius:10px; padding:9px 11px; margin-top:10px}
+.audio.err{border:1px solid var(--warn)}
+.audio .ab:disabled{opacity:.4; cursor:default}
+.audiomsg{margin-top:8px; font-size:12.5px; line-height:1.55; color:var(--warn)}
+
+/* ---------- Übungsmodus ---------- */
+.ueb{position:absolute; inset:0; background:var(--bg); display:flex; flex-direction:column; z-index:7}
+.uebbar{display:flex; align-items:center; gap:11px; padding:14px 16px 10px}
+.uebbody{flex:1; overflow-y:auto; padding:8px 16px 16px; display:flex; flex-direction:column; gap:16px}
+.uebbody > *{flex:0 0 auto}
+.uebfoot{padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px}
+.uebtext{font-size:19px; line-height:1.55; font-weight:500}
+.uebphase{font-family:var(--data); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--accent-hi)}
+.uhr{
+  font-family:var(--data); font-variant-numeric:tabular-nums; font-size:40px; line-height:1;
+  text-align:center; padding:10px 0; color:var(--ink);
+}
+.uhr.laeuft{color:var(--warn)}
+.uhr small{display:block; margin-top:7px; font-family:var(--data); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.pegel{height:5px; border-radius:99px; background:var(--sunk); overflow:hidden}
+.pegel i{display:block; height:100%; width:0; background:var(--warn); transition:width .08s linear}
+.uebtab{display:flex; flex-direction:column; gap:7px}
+.uebrow{display:flex; align-items:center; gap:10px; background:var(--surface); border-radius:10px; padding:11px 12px; font-size:13.5px}
+.uebrow .n{flex:1; min-width:0}
+.uebrow .t{font-family:var(--data); font-variant-numeric:tabular-nums; color:var(--ink-2)}
+.uebrow.lang .t{color:var(--warn)}
 .audio .ab{
   width:38px; height:38px; flex:none; border-radius:50%; border:0; cursor:pointer;
   background:var(--accent); color:var(--on-accent); display:grid; place-items:center; font-size:13px; line-height:1;
@@ -339,6 +368,42 @@ p{margin:0}
 .matrix .h{font-family:var(--data); font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
 
 .card.install{border:1px solid var(--accent); background:linear-gradient(170deg,var(--surface-2),var(--surface))}
+
+/* ---------- Startbildschirm ---------- */
+.splash{
+  position:absolute; inset:0; z-index:20; background:var(--bg);
+  display:flex; flex-direction:column;
+  padding-top:env(safe-area-inset-top,0px);
+}
+.splashtop{padding:22px 20px 10px}
+.splashtop .schritt{font-family:var(--data); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.splashtop h2{
+  font-family:var(--display); font-weight:800; font-size:25px; line-height:1.25;
+  letter-spacing:-.01em; margin:9px 0 0; text-wrap:balance;
+}
+.splashtop p{margin:9px 0 0; font-size:14px; line-height:1.6; color:var(--ink-2)}
+.splashbody{flex:1; overflow-y:auto; padding:16px 20px; display:flex; flex-direction:column; gap:14px}
+.splashbody > *{flex:0 0 auto}
+.splashfoot{padding:14px 20px calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:8px}
+.feld{display:flex; flex-direction:column; gap:7px}
+.feld label{font-family:var(--data); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.feld input{
+  width:100%; background:var(--sunk); color:var(--ink); border:1.5px solid var(--line);
+  border-radius:11px; padding:14px 14px; min-height:52px;
+  font-family:var(--body); font-size:16px;
+}
+.feld .frei{text-transform:none; letter-spacing:0; font-family:var(--body); font-size:12.5px; color:var(--ink-3); line-height:1.55}
+.wahl{display:flex; flex-direction:column; gap:8px}
+.wahl button{
+  width:100%; text-align:left; cursor:pointer; min-height:56px;
+  background:var(--surface); border:1.5px solid var(--line); color:var(--ink);
+  border-radius:12px; padding:13px 15px; font-family:var(--body); font-size:15px; line-height:1.4;
+}
+.wahl button[aria-pressed="true"]{border-color:var(--accent); background:var(--surface-2)}
+.wahl button small{display:block; margin-top:3px; color:var(--ink-3); font-size:12.5px}
+.splashdots{display:flex; gap:5px; justify-content:center; padding-bottom:4px}
+.splashdots i{width:7px; height:7px; border-radius:50%; background:var(--line); display:block}
+.splashdots i.an{background:var(--accent); width:20px; border-radius:99px}
 .card .btn + .btn{margin-top:-2px}
 html,body{height:100%}
 /* ---------- Pitch-Editor ---------- */
@@ -401,6 +466,11 @@ html,body{height:100%}
           <p class="muted" id="installTxt">Dann startet die App im Vollbild, ohne Browserleiste — und behält deinen Fortschritt zuverlässig.</p>
           <button class="btn" id="btnInstall" hidden>Jetzt installieren</button>
           <button class="btn sec" id="btnInstallClose">Später</button>
+        </div>
+
+        <div class="card" id="zielKarte" hidden>
+          <div class="topline"><h3 class="ch">Dein Ziel</h3><span class="chip acc" id="zielTitel"></span></div>
+          <p class="muted" id="zielText"></p>
         </div>
 
         <div class="card flat" id="backupNag" hidden>
@@ -529,7 +599,8 @@ html,body{height:100%}
           </div>
         </div>
 
-        <button class="btn" id="sharePitch">Diesen Pitch teilen</button>
+        <button class="btn" id="uebStart">Pitch üben</button>
+        <button class="btn sec" id="sharePitch">Diesen Pitch teilen</button>
         <button class="btn sec" id="pitchDelete" hidden>Diese Fassung löschen</button>
         <p class="muted">Der Empfänger sieht erst eine Vorschau, bevor etwas gespeichert wird. Aufnahmen gehen nur mit, wenn du sie einzeln dazuwählst.</p>
       </section>
@@ -604,6 +675,7 @@ html,body{height:100%}
           <div class="topline"><h3 class="ch">Alles zurücksetzen</h3></div>
           <p class="muted">Löscht Fortschritt, Werte und Serie auf diesem Gerät. Sichere vorher, wenn du etwas behalten willst.</p>
           <button class="btn sec" id="btnReset">Zurücksetzen</button>
+          <button class="btn sec" id="btnProfil">Angaben zu mir ändern</button>
         </div>
       </section>
 
@@ -636,6 +708,33 @@ html,body{height:100%}
       </div>
     </div>
 
+    <div class="splash" id="splash" hidden>
+      <div class="splashtop">
+        <span class="schritt" id="spSchritt">Schritt 1 von 4</span>
+        <h2 id="spTitel"></h2>
+        <p id="spText"></p>
+      </div>
+      <div class="splashbody" id="spBody"></div>
+      <div class="splashfoot">
+        <div class="splashdots" id="spDots"></div>
+        <button class="btn" id="spWeiter">Weiter</button>
+        <button class="btn sec" id="spZurueck" hidden>Zurück</button>
+      </div>
+    </div>
+
+    <div class="ueb" id="ueb" hidden>
+      <div class="uebbar">
+        <button class="x" id="uebQuit" aria-label="Übung abbrechen">×</button>
+        <div class="bar" style="flex:1"><i id="uebBar" style="width:0%"></i></div>
+        <span class="chip" id="uebCount">1/5</span>
+      </div>
+      <div class="uebbody" id="uebBody"></div>
+      <div class="uebfoot">
+        <button class="btn" id="uebAct">Aufnehmen</button>
+        <p class="btn-hint" id="uebHint"></p>
+      </div>
+    </div>
+
     <div class="toast" id="toast" hidden>
       <span id="toastTxt"></span>
       <button id="toastAct">Rückgängig</button>
@@ -646,10 +745,7 @@ html,body{height:100%}
       <div class="inner">
         <div class="topline"><h3 class="ch" id="sheetTitle">Pitch teilen</h3><button class="x" id="closeSheet" aria-label="Schließen" style="background:none;border:0;color:var(--ink-3);font-size:24px;cursor:pointer;min-width:44px;min-height:44px">×</button></div>
         <p class="muted" id="sheetSub">glasfaser-neubau.kwf · 3,1 kB</p>
-        <button class="shareopt"><span class="ic">WA</span><span>WhatsApp, Mail, Signal<small>Überall — über den System-Teilen-Dialog</small></span></button>
-        <button class="shareopt"><span class="ic">AD</span><span>AirDrop<small>iPhone und Mac in der Nähe</small></span></button>
-        <button class="shareopt"><span class="ic">NFC</span><span>NFC<small>Android, verpackte App — Telefone aneinanderhalten</small></span></button>
-        <button class="shareopt"><span class="ic">URL</span><span>Kurzlink<small>Pitch komprimiert in der Adresse</small></span></button>
+        <div id="sheetOpts"></div>
       </div>
     </div>
   </div><!-- /phone -->
@@ -664,6 +760,7 @@ html,body{height:100%}
   /* ---------- navigation ---------- */
   var SCREENS = ['heute','pfad','duell','pitch','ich'];
   function go(name){
+    if (!$('ueb').hidden) uebenEnde();
     if (!$('lesson').hidden) closeLesson();
     $('sheet').hidden = true;
     SCREENS.forEach(function(s){ $('s-'+s).hidden = (s !== name); });
@@ -1272,18 +1369,44 @@ html,body{height:100%}
   $('btnStartDuel').addEventListener('click', startDuel);
 
   /* ---------- sheets ---------- */
+  var TRANSPORT = [
+    { k:'WA',  n:'WhatsApp, Mail, Signal', s:'Überall — über den System-Teilen-Dialog' },
+    { k:'AD',  n:'AirDrop',                s:'iPhone und Mac in der Nähe' },
+    { k:'NFC', n:'NFC',                    s:'Android, verpackte App — Telefone aneinanderhalten' },
+    { k:'URL', n:'Kurzlink',               s:'Pitch komprimiert in der Adresse' }
+  ];
+
+  /* Ein Blatt, drei Verwendungen: Vorlagenwahl, Aufnahmeauswahl, Transportwege. */
+  function sheetLeer(titel, sub){
+    $('sheetTitle').textContent = titel;
+    $('sheetSub').textContent = sub || '';
+    $('sheetSub').hidden = !sub;
+    var o = $('sheetOpts');
+    o.innerHTML = '';
+    return o;
+  }
+
+  function sheetOpt(wo, kuerzel, name, sub){
+    var b = document.createElement('button');
+    b.className = 'shareopt'; b.type = 'button';
+    var ic = document.createElement('span'); ic.className = 'ic'; ic.textContent = kuerzel;
+    var tx = document.createElement('span'); tx.textContent = name;
+    if (sub){ var kl = document.createElement('small'); kl.textContent = sub; tx.appendChild(kl); }
+    b.appendChild(ic); b.appendChild(tx);
+    wo.appendChild(b);
+    return b;
+  }
+
   function openSheet(title, sub){
-    $('sheetTitle').textContent = title;
-    $('sheetSub').textContent = sub;
+    var o = sheetLeer(title, sub);
+    TRANSPORT.forEach(function(t){
+      sheetOpt(o, t.k, t.n, t.s).addEventListener('click', function(){ $('sheet').hidden = true; });
+    });
     $('sheet').hidden = false;
   }
-  $('sharePitch').addEventListener('click', function(){ openSheet('Pitch teilen','glasfaser-neubau.kwf · 3,1 kB'); });
   $('newDuel').addEventListener('click', function(){ openSheet('Duell-Code senden','Code RH7-2K9-QX4 · gültig 3 Tage'); });
   $('closeSheet').addEventListener('click', function(){ $('sheet').hidden = true; });
   $('sheet').addEventListener('click', function(e){ if (e.target === $('sheet')) $('sheet').hidden = true; });
-  document.querySelectorAll('.shareopt').forEach(function(b){
-    b.addEventListener('click', function(){ $('sheet').hidden = true; });
-  });
 
   /* ---------- pitch blocks ---------- */
   document.querySelectorAll('[data-block]').forEach(function(b){
@@ -1301,6 +1424,7 @@ html,body{height:100%}
   document.addEventListener('keydown', function(e){
     if (e.key !== 'Escape') return;
     if (!$('sheet').hidden){ $('sheet').hidden = true; return; }
+    if (!$('ueb').hidden){ uebenEnde(); return; }
     if (!$('lesson').hidden) closeLesson();
   });
 
@@ -1422,62 +1546,7 @@ html,body{height:100%}
   /* ---------- pitch: Aufnahmen (im Prototyp nachgestellt) ---------- */
   function fmt(s){ return Math.floor(s/60) + ':' + ('0' + Math.floor(s%60)).slice(-2); }
 
-  function verdrahteAudio(scope){
-  (scope || document).querySelectorAll('.audio').forEach(function(row){
-    var wave = row.querySelector('.wave');
-    var btn = row.querySelector('.ab');
-    var dur = row.querySelector('.ad');
-    var isRec = btn.classList.contains('rec');
-    var bars = [];
-    for (var i = 0; i < 24; i++){
-      var el = document.createElement('i');
-      el.style.height = (isRec ? 3 : 6 + Math.round(Math.random()*18)) + 'px';
-      wave.appendChild(el); bars.push(el);
-    }
-    var state = isRec ? 'empty' : 'ready';
-    var len = isRec ? 0 : 9, timer = null, t = 0;
-
-    function stopAll(){ if (timer){ clearInterval(timer); timer = null; } wave.className = 'wave'; }
-
-    btn.addEventListener('click', function(){
-      if (timer){
-        stopAll();
-        if (state === 'recording'){
-          state = 'ready'; len = Math.max(1, t);
-          btn.classList.remove('rec','on'); btn.textContent = '▶';
-          btn.setAttribute('aria-label','Eigene Aufnahme abspielen');
-          dur.textContent = fmt(len);
-        } else { btn.textContent = '▶'; dur.textContent = fmt(len); }
-        return;
-      }
-      t = 0;
-      if (state === 'empty'){
-        state = 'recording'; btn.classList.add('on'); btn.textContent = '■';
-        btn.setAttribute('aria-label','Aufnahme stoppen');
-        wave.className = 'wave live';
-        timer = setInterval(function(){
-          t += 0.1;
-          dur.textContent = fmt(t);
-          bars.forEach(function(b){ b.style.height = (3 + Math.random()*20) + 'px'; });
-          if (t > 30){ btn.click(); }
-        }, 100);
-      } else {
-        btn.textContent = '■'; wave.className = 'wave play';
-        timer = setInterval(function(){
-          t += 0.1;
-          dur.textContent = fmt(Math.max(0, len - t));
-          var k = Math.floor(t/len*bars.length);
-          bars.forEach(function(b, j){ b.style.opacity = j <= k ? '1' : '.35'; });
-          if (t >= len){
-            stopAll(); btn.textContent = '▶'; dur.textContent = fmt(len);
-            bars.forEach(function(b){ b.style.opacity = '1'; });
-          }
-        }, 100);
-      }
-    });
-  });
-  }
-
+  function verdrahteAudio(){}
   /* ---------- ladder ---------- */
 
   function eur(n){ return n.toLocaleString('de-DE') + ' €'; }
@@ -1633,6 +1702,524 @@ html,body{height:100%}
   }
 
 
+
+  /* ================= Aufnahmen ================= */
+  /* Blobs gehören nicht in localStorage — deshalb IndexedDB. */
+  var ADB = null;
+
+  function audioDb(){
+    return new Promise(function(res, rej){
+      if (ADB) return res(ADB);
+      if (!window.indexedDB) return rej(new Error('kein IndexedDB'));
+      var r = indexedDB.open('kwfabrik-audio', 1);
+      r.onupgradeneeded = function(){ r.result.createObjectStore('auf', { keyPath:'id' }); };
+      r.onsuccess = function(){ ADB = r.result; res(ADB); };
+      r.onerror = function(){ rej(r.error); };
+    });
+  }
+  function audioTx(modus){
+    return audioDb().then(function(db){ return db.transaction('auf', modus).objectStore('auf'); });
+  }
+  function audioSetzen(id, blob, dauer){
+    return audioTx('readwrite').then(function(s){
+      return new Promise(function(res, rej){
+        var r = s.put({ id:id, blob:blob, dauer:dauer, stand:Date.now() });
+        r.onsuccess = function(){ res(); }; r.onerror = function(){ rej(r.error); };
+      });
+    });
+  }
+  function audioHolen(id){
+    return audioTx('readonly').then(function(s){
+      return new Promise(function(res){
+        var r = s.get(id);
+        r.onsuccess = function(){ res(r.result || null); }; r.onerror = function(){ res(null); };
+      });
+    }).catch(function(){ return null; });
+  }
+  function audioWeg(id){
+    return audioTx('readwrite').then(function(s){
+      return new Promise(function(res){ var r = s.delete(id); r.onsuccess = r.onerror = function(){ res(); }; });
+    }).catch(function(){});
+  }
+  function audioAlle(){
+    return audioTx('readonly').then(function(s){
+      return new Promise(function(res){
+        var r = s.getAll();
+        r.onsuccess = function(){ res(r.result || []); }; r.onerror = function(){ res([]); };
+      });
+    }).catch(function(){ return []; });
+  }
+
+  /* Warum Aufnahme gerade nicht geht — in Worten, nicht als Fehlercode. */
+  function aufnahmeHindernis(){
+    if (!window.MediaRecorder) return 'Dieser Browser kann keine Aufnahmen machen.';
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      return window.isSecureContext === false
+        ? 'Aufnehmen geht nur über die veröffentlichte Adresse (https). Per Doppelklick auf die Datei gibt es keinen Mikrofonzugriff.'
+        : 'Dieser Browser gibt kein Mikrofon frei.';
+    }
+    return null;
+  }
+
+  var recorder = null, recStream = null, recChunks = [], recT0 = 0, recTick = null, recAnalyse = null;
+
+  function aufnahmeStarten(beiZeit, beiPegel){
+    var hindernis = aufnahmeHindernis();
+    if (hindernis) return Promise.reject(new Error(hindernis));
+    return navigator.mediaDevices.getUserMedia({ audio:true }).then(function(stream){
+      recStream = stream;
+      var typen = ['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'];
+      var mt = null;
+      for (var i = 0; i < typen.length; i++){
+        if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(typen[i])){ mt = typen[i]; break; }
+      }
+      recorder = mt ? new MediaRecorder(stream, { mimeType:mt }) : new MediaRecorder(stream);
+      recChunks = [];
+      recorder.ondataavailable = function(e){ if (e.data && e.data.size) recChunks.push(e.data); };
+      recorder.start();
+      recT0 = Date.now();
+
+      if (beiZeit || beiPegel){
+        var ctx = null, analyser = null, daten = null;
+        if (beiPegel && (window.AudioContext || window.webkitAudioContext)){
+          try {
+            ctx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = ctx.createAnalyser(); analyser.fftSize = 256;
+            ctx.createMediaStreamSource(stream).connect(analyser);
+            daten = new Uint8Array(analyser.frequencyBinCount);
+            recAnalyse = ctx;
+          } catch (e) { /* ohne Pegelanzeige weiter */ }
+        }
+        recTick = setInterval(function(){
+          if (beiZeit) beiZeit((Date.now() - recT0) / 1000);
+          if (beiPegel && analyser){
+            analyser.getByteFrequencyData(daten);
+            var sum = 0;
+            for (var k = 0; k < daten.length; k++) sum += daten[k];
+            beiPegel(Math.min(100, (sum / daten.length) * 1.8));
+          }
+        }, 100);
+      }
+    }).catch(function(e){
+      if (e && e.name === 'NotAllowedError')
+        throw new Error('Mikrofon abgelehnt. Erlaube den Zugriff in den Browsereinstellungen für diese Seite und versuch es nochmal.');
+      if (e && e.name === 'NotFoundError') throw new Error('Kein Mikrofon gefunden.');
+      throw e;
+    });
+  }
+
+  function aufnahmeStoppen(){
+    return new Promise(function(res){
+      if (!recorder || recorder.state === 'inactive') return res(null);
+      var dauer = (Date.now() - recT0) / 1000;
+      recorder.onstop = function(){
+        var blob = new Blob(recChunks, { type: recorder.mimeType || 'audio/webm' });
+        if (recStream) recStream.getTracks().forEach(function(t){ t.stop(); });
+        if (recTick){ clearInterval(recTick); recTick = null; }
+        if (recAnalyse){ try { recAnalyse.close(); } catch (e) {} recAnalyse = null; }
+        recorder = null; recStream = null;
+        res({ blob:blob, dauer:dauer });
+      };
+      recorder.stop();
+    });
+  }
+
+  function aufnahmeAbbrechen(){
+    if (recorder && recorder.state !== 'inactive'){ try { recorder.stop(); } catch (e) {} }
+    if (recStream) recStream.getTracks().forEach(function(t){ t.stop(); });
+    if (recTick){ clearInterval(recTick); recTick = null; }
+    if (recAnalyse){ try { recAnalyse.close(); } catch (e) {} recAnalyse = null; }
+    recorder = null; recStream = null;
+  }
+
+  var spieler = null;
+  function abspielen(blob, beiEnde){
+    if (spieler){ spieler.pause(); URL.revokeObjectURL(spieler.src); spieler = null; }
+    var url = URL.createObjectURL(blob);
+    spieler = new Audio(url);
+    spieler.onended = function(){ URL.revokeObjectURL(url); spieler = null; if (beiEnde) beiEnde(); };
+    spieler.play().catch(function(){ if (beiEnde) beiEnde(); });
+    return spieler;
+  }
+  function abspielenStoppen(){
+    if (spieler){ spieler.pause(); spieler = null; }
+  }
+
+  function zeitFmt(s){
+    s = Math.max(0, Math.round(s));
+    return Math.floor(s/60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+  function aufId(pitchId, i, wer){ return pitchId + ':' + i + ':' + wer; }
+
+
+
+  /* ================= Startbildschirm und Profil ================= */
+  var PROFKEY = 'kwfabrik.profil';
+  var PROF = { name:'', seit:'', stufe:'', einkommen:0, ziel:'', zielBis:'', fertig:false };
+
+  var STUFEN_LEITER = ['Merch / Berater','Junior Trainer','Senior Trainer','Assistant Manager','Junior Sales Partner','Sales Partner'];
+  var SEIT_WAHL = [
+    { w:'neu', t:'Erste Wochen', s:'Noch keine 30 Tage dabei' },
+    { w:'monate', t:'Ein paar Monate', s:'Die ersten Türen sind durch' },
+    { w:'jahr', t:'Über ein Jahr', s:'Läuft, aber die Quali schwankt' },
+    { w:'lang', t:'Alter Hase', s:'Mehrere Jahre im Geschäft' }
+  ];
+
+  function ladeProfil(){
+    try {
+      var r = localStorage.getItem(PROFKEY);
+      if (r){
+        var d = JSON.parse(r);
+        if (d && typeof d === 'object'){
+          Object.keys(PROF).forEach(function(k){
+            if (typeof d[k] === typeof PROF[k]) PROF[k] = d[k];
+          });
+        }
+      }
+    } catch (e) {}
+  }
+  function sichereProfil(){
+    try { localStorage.setItem(PROFKEY, JSON.stringify(PROF)); } catch (e) {}
+  }
+
+  var spI = 0;
+  var SCHRITTE = [
+    {
+      titel: 'Wie heißt du?',
+      text: 'Damit die App dich begrüßt statt „Hallo Nutzer". Bleibt auf diesem Gerät.',
+      bau: function(body){
+        feldBauen(body, 'Vorname', 'name', 'text', 'Steve');
+        wahlBauen(body, 'Seit wann machst du das?', SEIT_WAHL, 'seit');
+      },
+      weiter: function(){ return PROF.name.trim() ? null : 'Trag deinen Vornamen ein'; }
+    },
+    {
+      titel: 'Wo stehst du gerade?',
+      text: 'Die Karriereleiter zeigt dir dann direkt die nächste Stufe statt bei null anzufangen.',
+      bau: function(body){
+        wahlBauen(body, 'Aktuelle Stufe', STUFEN_LEITER.map(function(s){ return { w:s, t:s }; }), 'stufe');
+      },
+      weiter: function(){ return PROF.stufe ? null : 'Wähle deine aktuelle Stufe'; }
+    },
+    {
+      titel: 'Was verdienst du im Monat?',
+      text: 'Freiwillig. Die App rechnet damit aus, was auf der nächsten Stufe drin wäre — in Euro statt in Kriterien. Die Zahl bleibt auf diesem Gerät und wird nirgendwohin gesendet.',
+      bau: function(body){
+        feldBauen(body, 'Monatlich, netto, ungefähr', 'einkommen', 'number', '2400',
+                  'Lass das Feld leer, wenn du nicht willst. Alles andere funktioniert trotzdem.');
+      },
+      weiter: function(){ return null; }
+    },
+    {
+      titel: 'Wo willst du hin?',
+      text: 'Daraus macht die App eine Zielmarke auf dem Startbildschirm — kein Druck, nur eine Richtung.',
+      bau: function(body){
+        var offen = STUFEN_LEITER.slice(Math.max(0, STUFEN_LEITER.indexOf(PROF.stufe) + 1));
+        if (!offen.length) offen = [STUFEN_LEITER[STUFEN_LEITER.length - 1]];
+        wahlBauen(body, 'Nächste Stufe', offen.map(function(s){ return { w:s, t:s }; }), 'ziel');
+        feldBauen(body, 'Bis wann', 'zielBis', 'month', '');
+      },
+      weiter: function(){ return PROF.ziel ? null : 'Wähle eine Zielstufe'; }
+    }
+  ];
+
+  function feldBauen(body, label, schluessel, typ, platzhalter, frei){
+    var w = document.createElement('div'); w.className = 'feld';
+    var l = document.createElement('label'); l.textContent = label;
+    var id = 'sp_' + schluessel;
+    l.setAttribute('for', id);
+    var inp = document.createElement('input');
+    inp.id = id; inp.type = typ; inp.placeholder = platzhalter || '';
+    if (typ === 'number'){ inp.inputMode = 'numeric'; inp.min = '0'; inp.step = '50'; }
+    inp.value = PROF[schluessel] ? String(PROF[schluessel]) : '';
+    inp.addEventListener('input', function(){
+      PROF[schluessel] = (typ === 'number') ? (parseInt(inp.value, 10) || 0) : inp.value;
+    });
+    w.appendChild(l); w.appendChild(inp);
+    if (frei){
+      var f = document.createElement('span'); f.className = 'frei'; f.textContent = frei;
+      w.appendChild(f);
+    }
+    body.appendChild(w);
+  }
+
+  function wahlBauen(body, label, optionen, schluessel){
+    var w = document.createElement('div'); w.className = 'feld';
+    var l = document.createElement('label'); l.textContent = label;
+    w.appendChild(l);
+    var g = document.createElement('div'); g.className = 'wahl';
+    optionen.forEach(function(o){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-pressed', PROF[schluessel] === o.w ? 'true' : 'false');
+      b.textContent = o.t;
+      if (o.s){
+        var s = document.createElement('small'); s.textContent = o.s; b.appendChild(s);
+      }
+      b.addEventListener('click', function(){
+        PROF[schluessel] = o.w;
+        [].forEach.call(g.children, function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        $('spWeiter').disabled = false;
+      });
+      g.appendChild(b);
+    });
+    w.appendChild(g);
+    body.appendChild(w);
+  }
+
+  function splashZeichnen(){
+    var s = SCHRITTE[spI];
+    $('spSchritt').textContent = 'Schritt ' + (spI + 1) + ' von ' + SCHRITTE.length;
+    $('spTitel').textContent = s.titel;
+    $('spText').textContent = s.text;
+    var body = $('spBody'); body.innerHTML = '';
+    s.bau(body);
+    $('spDots').innerHTML = SCHRITTE.map(function(_, k){
+      return '<i class="' + (k === spI ? 'an' : '') + '"></i>';
+    }).join('');
+    $('spZurueck').hidden = spI === 0;
+    $('spWeiter').textContent = spI === SCHRITTE.length - 1 ? 'Los geht’s' : 'Weiter';
+    $('spWeiter').disabled = false;
+  }
+
+  $('spWeiter').addEventListener('click', function(){
+    var fehlt = SCHRITTE[spI].weiter();
+    if (fehlt){
+      $('spText').textContent = fehlt;
+      $('spText').style.color = 'var(--warn)';
+      return;
+    }
+    $('spText').style.color = '';
+    if (spI < SCHRITTE.length - 1){ spI++; splashZeichnen(); return; }
+    PROF.fertig = true; sichereProfil();
+    $('splash').hidden = true;
+    profilAnwenden();
+  });
+
+  $('spZurueck').addEventListener('click', function(){
+    if (spI > 0){ spI--; splashZeichnen(); }
+  });
+
+  /* Profil in die Oberfläche tragen */
+  function profilAnwenden(){
+    if (PROF.name) $('greet').textContent = 'Moin, ' + PROF.name.split(' ')[0];
+
+    // Karriereleiter mit dem Einkommen anreichern
+    var k = $('zielKarte');
+    if (!k) return;
+    if (!PROF.ziel){ k.hidden = true; return; }
+    k.hidden = false;
+    $('zielTitel').textContent = PROF.stufe + ' → ' + PROF.ziel;
+    var teile = [];
+    if (PROF.zielBis){
+      var m = PROF.zielBis.split('-');
+      var monate = (parseInt(m[0],10) - new Date().getFullYear()) * 12 +
+                   (parseInt(m[1],10) - (new Date().getMonth() + 1));
+      teile.push(monate > 0 ? 'noch ' + monate + (monate === 1 ? ' Monat' : ' Monate')
+                            : 'Zieltermin erreicht');
+    }
+    if (PROF.einkommen) teile.push('heute ' + PROF.einkommen.toLocaleString('de-DE') + ' € im Monat');
+    $('zielText').textContent = teile.join(' · ') || 'Dein Ziel steht.';
+  }
+
+  function splashPruefen(){
+    ladeProfil();
+    if (PROF.fertig){ profilAnwenden(); return; }
+    spI = 0;
+    $('splash').hidden = false;
+    splashZeichnen();
+  }
+
+  /* ================= Übungsmodus ================= */
+  /* Ein Pitch klingt geschrieben immer besser als gesprochen. Deshalb hier:
+     laut sprechen, Zeit messen, danach sich selbst gegen den Mentor hören. */
+  var U = null;
+
+  function uebenStarten(){
+    var p = aktiverPitch();
+    var bloecke = p.bloecke.filter(function(b){ return !b.karten; });
+    if (!bloecke.length){ zeigeToast('Dieser Pitch hat noch keine Bausteine zum Üben.', null); return; }
+    U = { p:p, bloecke:bloecke, i:0, zeiten:[], phase:'bereit', laeuft:false, letzte:null };
+    $('ueb').hidden = false;
+    uebenZeichnen();
+  }
+
+  function uebenEnde(){
+    aufnahmeAbbrechen(); abspielenStoppen();
+    $('ueb').hidden = true; U = null;
+  }
+  $('uebQuit').addEventListener('click', uebenEnde);
+  $('uebStart').addEventListener('click', uebenStarten);
+
+  function uebenAkt(label, hinweis){
+    $('uebAct').textContent = label;
+    $('uebHint').textContent = hinweis || '';
+    $('uebHint').hidden = !hinweis;
+  }
+
+  function uebenZeichnen(){
+    var b = U.bloecke[U.i];
+    var body = $('uebBody');
+    $('uebCount').textContent = (U.i + 1) + '/' + U.bloecke.length;
+    $('uebBar').style.width = Math.round(U.i / U.bloecke.length * 100) + '%';
+    body.innerHTML = '';
+
+    var ph = document.createElement('p'); ph.className = 'uebphase'; ph.textContent = b.t;
+    body.appendChild(ph);
+
+    var tx = document.createElement('p'); tx.className = 'uebtext';
+    tx.textContent = b.x || 'Für diesen Baustein steht noch kein Text. Sprich frei.';
+    if (!b.x) tx.style.color = 'var(--ink-3)';
+    body.appendChild(tx);
+
+    var uhr = document.createElement('div'); uhr.className = 'uhr'; uhr.id = 'uebUhr';
+    uhr.innerHTML = '0:00<small>Sprechdauer</small>';
+    body.appendChild(uhr);
+
+    var peg = document.createElement('div'); peg.className = 'pegel';
+    peg.innerHTML = '<i id="uebPegel"></i>';
+    body.appendChild(peg);
+
+    U.phase = 'bereit'; U.laeuft = false; U.letzte = null;
+    uebenAkt('Aufnehmen', 'Sprich den Baustein laut, so wie an der Tür');
+  }
+
+  function uebenVergleich(){
+    var body = $('uebBody');
+    var alt = body.querySelector('.uebvgl');
+    if (alt) alt.remove();
+
+    var box = document.createElement('div');
+    box.className = 'card uebvgl'; box.style.background = 'var(--sunk)';
+    var h3 = document.createElement('h3'); h3.className = 'ch'; h3.textContent = 'Anhören';
+    box.appendChild(h3);
+
+    var reihe = function(wer, daten){
+      var r = document.createElement('div'); r.className = 'audio';
+      var btn = document.createElement('button');
+      btn.className = 'ab'; btn.type = 'button'; btn.textContent = '▶';
+      btn.setAttribute('aria-label', (wer === 'du' ? 'Deine' : 'Mentor-') + 'Aufnahme abspielen');
+      var lab = document.createElement('span'); lab.className = 'al';
+      lab.textContent = wer === 'du' ? 'Du' : 'Mentor';
+      var wv = document.createElement('span'); wv.className = 'wave';
+      for (var k = 0; k < 24; k++){
+        var i2 = document.createElement('i');
+        i2.style.height = (4 + Math.round(Math.random()*18)) + 'px';
+        wv.appendChild(i2);
+      }
+      var d = document.createElement('span'); d.className = 'ad'; d.textContent = zeitFmt(daten.dauer);
+      r.appendChild(btn); r.appendChild(lab); r.appendChild(wv); r.appendChild(d);
+      btn.addEventListener('click', function(){
+        if (btn.textContent === '■'){ abspielenStoppen(); btn.textContent = '▶'; wv.className = 'wave'; return; }
+        wv.className = 'wave play'; btn.textContent = '■';
+        abspielen(daten.blob, function(){ btn.textContent = '▶'; wv.className = 'wave'; });
+      });
+      return r;
+    };
+
+    if (U.letzte) box.appendChild(reihe('du', U.letzte));
+    var mId = aufId(U.p.id, U.bloecke.indexOf(U.bloecke[U.i]), 'mentor');
+    audioHolen(mId).then(function(m){
+      if (m) box.appendChild(reihe('mentor', m));
+      else {
+        var p2 = document.createElement('p'); p2.className = 'muted';
+        p2.textContent = 'Für diesen Baustein gibt es keine Mentor-Aufnahme zum Vergleich.';
+        box.appendChild(p2);
+      }
+    });
+    $('uebBody').appendChild(box);
+  }
+
+  $('uebAct').addEventListener('click', function(){
+    if (!U) return;
+
+    if (U.phase === 'bereit'){
+      aufnahmeStarten(function(s){
+        var u = $('uebUhr');
+        if (u) u.innerHTML = zeitFmt(s) + '<small>Sprechdauer</small>';
+      }, function(p){
+        var pg = $('uebPegel'); if (pg) pg.style.width = p + '%';
+      }).then(function(){
+        U.phase = 'laeuft';
+        var u = $('uebUhr'); if (u) u.classList.add('laeuft');
+        uebenAkt('Fertig', 'Tipp auf Fertig, wenn du durch bist');
+      }).catch(function(e){
+        uebenAkt('Aufnehmen', e.message);
+      });
+      return;
+    }
+
+    if (U.phase === 'laeuft'){
+      aufnahmeStoppen().then(function(r){
+        var u = $('uebUhr'); if (u) u.classList.remove('laeuft');
+        var pg = $('uebPegel'); if (pg) pg.style.width = '0%';
+        if (!r){ U.phase = 'bereit'; uebenAkt('Aufnehmen', ''); return; }
+        U.letzte = r;
+        U.zeiten[U.i] = r.dauer;
+        var idx = U.p.bloecke.indexOf(U.bloecke[U.i]);
+        audioSetzen(aufId(U.p.id, idx, 'du'), r.blob, r.dauer);
+        U.phase = 'anhoeren';
+        uebenVergleich();
+        uebenAkt(U.i < U.bloecke.length - 1 ? 'Weiter' : 'Auswertung',
+                 'Hör dich an, bevor du weitergehst');
+      });
+      return;
+    }
+
+    abspielenStoppen();
+    if (U.i < U.bloecke.length - 1){ U.i++; uebenZeichnen(); return; }
+    uebenAuswertung();
+  });
+
+  function uebenAuswertung(){
+    $('uebBar').style.width = '100%';
+    $('uebCount').textContent = 'fertig';
+    var body = $('uebBody');
+    body.innerHTML = '';
+
+    var gesamt = U.zeiten.reduce(function(a, b){ return a + (b || 0); }, 0);
+
+    var kopf = document.createElement('p'); kopf.className = 'prompt';
+    kopf.textContent = 'Dein Pitch dauert ' + zeitFmt(gesamt) + '.';
+    body.appendChild(kopf);
+
+    var tab = document.createElement('div'); tab.className = 'uebtab';
+    U.bloecke.forEach(function(b, k){
+      var r = document.createElement('div'); r.className = 'uebrow';
+      var lang = (U.zeiten[k] || 0) > 35;
+      if (lang) r.className += ' lang';
+      var n = document.createElement('span'); n.className = 'n'; n.textContent = b.t;
+      var t = document.createElement('span'); t.className = 't'; t.textContent = zeitFmt(U.zeiten[k] || 0);
+      r.appendChild(n); r.appendChild(t);
+      tab.appendChild(r);
+    });
+    body.appendChild(tab);
+
+    var lange = U.bloecke.filter(function(b, k){ return (U.zeiten[k] || 0) > 35; });
+    var e = document.createElement('div'); e.className = 'effect ' + (lange.length ? 'bad' : 'good');
+    e.innerHTML = '<b>' + (lange.length ? 'Zu lang' : 'Gute Länge') + '</b>';
+    var s = document.createElement('span');
+    s.textContent = lange.length
+      ? lange.map(function(b){ return b.t; }).join(' und ') + ' über 35 Sekunden. An der Tür hört dir niemand so lange zu, ohne zu unterbrechen — kürz den Baustein auf den einen Satz, der trägt.'
+      : 'Kein Baustein über 35 Sekunden. Das ist eine Länge, die ein Kunde an der Tür mitgeht.';
+    e.appendChild(s);
+    body.appendChild(e);
+
+    var hinweis = document.createElement('div'); hinweis.className = 'effect mid';
+    hinweis.innerHTML = '<b>Deine Aufnahmen sind gespeichert</b>';
+    var s2 = document.createElement('span');
+    s2.textContent = 'Du findest sie unter Pitch bei den Bausteinen und kannst sie dort einzeln neu aufnehmen oder löschen.';
+    hinweis.appendChild(s2);
+    body.appendChild(hinweis);
+
+    uebenAkt('Fertig', '');
+    $('uebAct').onclick = function(){
+      uebenEnde(); renderPitch();
+      $('uebAct').onclick = null;
+      location.hash = '';
+    };
+  }
+
   /* ================= Pitch-Editor ================= */
   var PKEY = 'kwfabrik.pitches';
   var PITCHES = { aktiv:'', liste:[] };
@@ -1685,11 +2272,53 @@ html,body{height:100%}
     return neu;
   }
 
-  function neuerPitch(){
+  var VORLAGEN = [
+    { id:'leer', n:'Leerer Pitch', k:'LE', s:'Nur die fünf Phasen, Text schreibst du selbst' },
+    { id:'glasfaser', n:'Glasfaser', k:'GF', s:'Netzanschluss, Ausbau, Bandbreite',
+      bl:[
+        'Guten Tag, [Name], Ranger Deutschland, im Auftrag der Telekom. Es geht um Ihren Netzanschluss — Telefon und Internet nutzen Sie ja, richtig?',
+        'Hier wurde neue Technik freigeschaltet. Ich schaue gerade, wer davon profitieren kann — zwei Minuten, dann wissen Sie, ob das für Sie was ist.',
+        'Wie viele Geräte hängen bei Ihnen abends gleichzeitig dran? Arbeitet jemand von zuhause? — Und dann: was das für ihn konkret ändert.',
+        'Ich nehme die Daten auf, Sie bekommen alles per Mail und haben 14 Tage Widerruf. Passt das so für Sie?',
+        'Gleich ruft eine Kollegin an, gleicht die Daten ab und fragt, warum Sie sich entschieden haben. Sagen Sie da genau das, was Sie mir gerade gesagt haben.'
+      ] },
+    { id:'energie', n:'Energie', k:'EN', s:'Strom und Gas, Rechnung auf dem Küchentisch',
+      bl:[
+        'Guten Tag, [Name], Ranger Deutschland. Ich bin wegen der Strompreise in der Straße unterwegs — zahlen Sie noch beim Grundversorger?',
+        'Ich rechne Ihnen in zwei Minuten aus, was Sie aktuell zahlen und was Sie bei uns zahlen würden. Dafür bräuchte ich einmal Ihre letzte Jahresabrechnung.',
+        'Grundpreis, Arbeitspreis, Ihr Verbrauch — und was unterm Strich übrig bleibt. Schriftlich, damit Sie es nachrechnen können.',
+        'Ich nehme die Daten von der Rechnung auf, Sie bekommen alles per Mail und haben 14 Tage Widerruf. Passt das?',
+        'Gleich kommt der Anruf zur Bestätigung. Hier ist meine Nummer, ich bin Ihr Ansprechpartner — melden Sie sich, wenn etwas unklar ist.'
+      ] },
+    { id:'nvm', n:'Nachvermarktung', k:'NV', s:'Glasfaser liegt schon im Haus',
+      bl:[
+        'Guten Tag, [Name], Ranger Deutschland. Bei Ihnen im Haus liegt die Glasfaser bereits — haben Sie das mitbekommen?',
+        'Der Eigentümer hat die Verkabelung unterschrieben, die Leitung ist da. Anschluss in der Regel in 30 bis 90 Tagen.',
+        'Wie zufrieden sind Sie abends mit der Leitung? — Und dann der Unterschied: bei Glasfaser bleibt die Bandbreite stabil, egal wer noch dranhängt.',
+        'Ich trage Sie ein, Sie bekommen alles per Mail und haben 14 Tage Widerruf. Passt das?',
+        'Gleich kommt der Bestätigungsanruf. Die Glasfaser wird bis zu drei Meter in der Wohnung verlegt — alles darüber besprechen wir vorher, damit es keine Überraschung gibt.'
+      ] }
+  ];
+
+  function vorlageWaehlen(){
+    var o = sheetLeer('Neuer Pitch', 'Womit willst du anfangen? Den Text kannst du überall ändern.');
+    VORLAGEN.forEach(function(v){
+      sheetOpt(o, v.k, v.n, v.s).addEventListener('click', function(){
+        $('sheet').hidden = true;
+        neuerPitch(v);
+      });
+    });
+    $('sheet').hidden = false;
+  }
+
+  function neuerPitch(vorlage){
+    var v = (vorlage && vorlage.id) ? vorlage : VORLAGEN[0];
     var namen = PHASES.map(function(ph){ return ph.n; });
     var neu = {
-      id: 'p' + Date.now(), titel: 'Mein Pitch', quelle: 'eigen', stand: heute(),
-      bloecke: namen.map(function(n){ return { t:n, x:'' }; })
+      id: 'p' + Date.now(),
+      titel: v.id === 'leer' ? 'Mein Pitch' : v.n,
+      produkt: v.id, quelle: 'eigen', stand: heute(),
+      bloecke: namen.map(function(n, k){ return { t:n, x:(v.bl && v.bl[k]) || '' }; })
         .concat([{ t:'Einwandkarten', karten:[] }])
     };
     PITCHES.liste.push(neu); PITCHES.aktiv = neu.id; sicherePitches();
@@ -1719,6 +2348,7 @@ html,body{height:100%}
       var b = document.createElement('button');
       b.type = 'button';
       b.textContent = p.fest ? 'Offiziell' : p.titel;
+      if (p.produkt && p.produkt !== 'leer') b.title = 'Vorlage: ' + p.produkt;
       b.setAttribute('aria-current', p.id === aktiv.id ? 'true' : 'false');
       b.addEventListener('click', function(){
         PITCHES.aktiv = p.id; sicherePitches(); offen = { 0:true }; renderPitch();
@@ -1727,7 +2357,7 @@ html,body{height:100%}
     });
     var n = document.createElement('button');
     n.type = 'button'; n.className = 'neu'; n.textContent = '+ Neu';
-    n.addEventListener('click', neuerPitch);
+    n.addEventListener('click', vorlageWaehlen);
     bar.appendChild(n);
   }
 
@@ -1794,7 +2424,8 @@ html,body{height:100%}
       hv.className = 'muted'; hv.style.marginTop = '8px'; hv.textContent = b.hinweis;
       inner.appendChild(hv);
     }
-    for (var a = 0; a < (b.audio || 0); a++) inner.appendChild(audioZeile(b.audio === 2 && a === 0));
+    inner.appendChild(audioZeile(p.id, i, 'mentor'));
+    inner.appendChild(audioZeile(p.id, i, 'du'));
 
     var act = document.createElement('div'); act.className = 'blockact';
     var edit = document.createElement('button');
@@ -1908,17 +2539,110 @@ html,body{height:100%}
     });
   }
 
-  function audioZeile(mentor){
+  function audioZeile(pitchId, i, wer, beiAenderung){
     var row = document.createElement('div');
     row.className = 'audio';
-    row.innerHTML = '<button class="ab' + (mentor ? '' : ' rec') + '" aria-label="' +
-      (mentor ? 'Musteraufnahme abspielen' : 'Eigene Aufnahme starten') + '">' +
-      (mentor ? '▶' : '●') + '</button><span class="al">' + (mentor ? 'Mentor' : 'Du') +
-      '</span><span class="wave" aria-hidden="true"></span><span class="ad">' +
-      (mentor ? '0:09' : '—') + '</span>';
+    var btn = document.createElement('button');
+    btn.className = 'ab' + (wer === 'du' ? ' rec' : '');
+    btn.type = 'button';
+    var label = document.createElement('span'); label.className = 'al';
+    label.textContent = wer === 'mentor' ? 'Mentor' : 'Du';
+    var mitte = document.createElement('span'); mitte.className = 'wave'; mitte.setAttribute('aria-hidden','true');
+    var dauer = document.createElement('span'); dauer.className = 'ad'; dauer.textContent = '—';
+    row.appendChild(btn); row.appendChild(label); row.appendChild(mitte); row.appendChild(dauer);
+
+    var weg = null;
+    if (wer === 'du'){
+      weg = document.createElement('button');
+      weg.className = 'ab'; weg.type = 'button'; weg.textContent = '×';
+      weg.setAttribute('aria-label', 'Aufnahme löschen');
+      weg.style.background = 'var(--surface-2)'; weg.style.color = 'var(--ink-2)';
+      weg.hidden = true;
+      row.appendChild(weg);
+    }
+
+    var id = aufId(pitchId, i, wer);
+    var vorhanden = null;
+
+    function balken(n, farbe){
+      mitte.innerHTML = '';
+      for (var k = 0; k < 24; k++){
+        var b = document.createElement('i');
+        b.style.height = (n ? 4 + Math.round(Math.random()*18) : 3) + 'px';
+        if (farbe) b.style.background = farbe;
+        mitte.appendChild(b);
+      }
+    }
+
+    function zeichne(){
+      if (vorhanden){
+        btn.textContent = '▶'; btn.classList.remove('rec');
+        btn.setAttribute('aria-label', 'Aufnahme abspielen');
+        dauer.textContent = zeitFmt(vorhanden.dauer);
+        if (weg) weg.hidden = false;
+        balken(true);
+      } else {
+        btn.textContent = wer === 'du' ? '●' : '▶';
+        btn.classList.toggle('rec', wer === 'du');
+        btn.setAttribute('aria-label', wer === 'du' ? 'Aufnahme starten' : 'Keine Aufnahme vorhanden');
+        btn.disabled = (wer === 'mentor');
+        dauer.textContent = '—';
+        if (weg) weg.hidden = true;
+        balken(false);
+      }
+    }
+
+    audioHolen(id).then(function(d){ vorhanden = d; zeichne(); });
+    zeichne();
+
+    var laeuft = false;
+    btn.addEventListener('click', function(){
+      if (vorhanden && !laeuft){
+        mitte.className = 'wave play';
+        abspielen(vorhanden.blob, function(){ mitte.className = 'wave'; btn.textContent = '▶'; });
+        btn.textContent = '■';
+        return;
+      }
+      if (laeuft){
+        laeuft = false;
+        aufnahmeStoppen().then(function(r){
+          row.classList.remove('err');
+          if (!r) { zeichne(); return; }
+          return audioSetzen(id, r.blob, r.dauer).then(function(){
+            vorhanden = { blob:r.blob, dauer:r.dauer }; zeichne();
+            if (beiAenderung) beiAenderung();
+          });
+        });
+        return;
+      }
+      aufnahmeStarten(function(s){ dauer.textContent = zeitFmt(s); }, function(p){
+        [].forEach.call(mitte.children, function(b, k){
+          b.style.height = Math.max(3, (p/100) * (6 + ((k * 7) % 20))) + 'px';
+        });
+      }).then(function(){
+        laeuft = true; btn.textContent = '■'; btn.classList.add('on');
+        mitte.className = 'wave live';
+        btn.setAttribute('aria-label', 'Aufnahme beenden');
+      }).catch(function(e){
+        row.classList.add('err');
+        var m = row.parentElement && row.parentElement.querySelector('.audiomsg');
+        if (!m){
+          m = document.createElement('p'); m.className = 'audiomsg';
+          if (row.parentElement) row.parentElement.appendChild(m);
+        }
+        m.textContent = e.message;
+      });
+    });
+
+    if (weg) weg.addEventListener('click', function(){
+      audioWeg(id).then(function(){
+        vorhanden = null; zeichne();
+        if (beiAenderung) beiAenderung();
+      });
+    });
+
     return row;
   }
-
   /* ---- eigene Fassung löschen ---- */
   $('pitchDelete').addEventListener('click', function(){
     var p = aktiverPitch();
@@ -1952,11 +2676,29 @@ html,body{height:100%}
       catch (e){ $('packMsg').textContent = 'Die Datei ließ sich nicht lesen. Ist das wirklich ein Inhaltspaket?'; return; }
       if (d && d.typ === 'pitch' && d.pitch && Array.isArray(d.pitch.bloecke)){
         ladePitchesEinmal();
-        var imp = { id:'p' + Date.now(), titel:d.pitch.titel || 'Geteilter Pitch',
-                    quelle:'geteilt', stand:d.pitch.stand || '', bloecke:d.pitch.bloecke };
+        var basisTitel = d.pitch.titel || 'Geteilter Pitch';
+        var titel = basisTitel, zahl = 2;
+        while (allePitches().some(function(x){ return x.titel === titel; })) titel = basisTitel + ' ' + (zahl++);
+        var imp = { id:'p' + Date.now(), titel:titel, quelle:'geteilt',
+                    produkt:d.pitch.produkt || '', stand:d.pitch.stand || '', bloecke:d.pitch.bloecke };
         PITCHES.liste.push(imp); PITCHES.aktiv = imp.id; sicherePitches();
+        var anzahl = 0;
+        if (Array.isArray(d.aufnahmen)){
+          d.aufnahmen.forEach(function(a){
+            try {
+              var teil = String(a.daten).split(',');
+              var bin = atob(teil[1]);
+              var arr = new Uint8Array(bin.length);
+              for (var k = 0; k < bin.length; k++) arr[k] = bin.charCodeAt(k);
+              var typ = (teil[0].match(/:(.*?);/) || [null, 'audio/webm'])[1];
+              audioSetzen(imp.id + ':' + a.id, new Blob([arr], { type:typ }), a.dauer || 0);
+              anzahl++;
+            } catch (e) { /* eine kaputte Aufnahme kippt nicht den ganzen Import */ }
+          });
+        }
         renderPitch();
-        $('packMsg').textContent = 'Pitch »' + imp.titel + '« übernommen — unter Pitch zu finden.';
+        $('packMsg').textContent = 'Pitch »' + imp.titel + '« übernommen' +
+          (anzahl ? ' samt ' + anzahl + (anzahl === 1 ? ' Aufnahme' : ' Aufnahmen') : '') + ' — unter Pitch zu finden.';
         return;
       }
       if (!pruefePaket(d)){
@@ -1989,12 +2731,74 @@ html,body{height:100%}
     zeigeToast(meldung + ' als ' + name + ' gespeichert.', null);
   }
 
+  /* Aufnahmen machen die Datei gross — deshalb einzeln zuschaltbar. */
+  function blobNachText(blob){
+    return new Promise(function(res, rej){
+      var fr = new FileReader();
+      fr.onload = function(){ res(String(fr.result)); };
+      fr.onerror = function(){ rej(fr.error); };
+      fr.readAsDataURL(blob);
+    });
+  }
+
+  function kb(bytes){ return Math.max(1, Math.round(bytes / 1024)) + ' kB'; }
+
   $('sharePitch').addEventListener('click', function(){
     var p = aktiverPitch();
-    teile({ kwfabrik:1, typ:'pitch', pitch:{ titel:p.titel, quelle:p.quelle, stand:p.stand || '', bloecke:p.bloecke } },
-          p.titel, 'Pitch');
+    audioAlle().then(function(alle){
+      var meine = alle.filter(function(a){ return a.id.indexOf(p.id + ':') === 0; });
+      if (!meine.length){ pitchTeilen(p, []); return; }
+
+      /* In der Datei stehen die Aufnahmen als Text — das macht sie rund ein Drittel groesser. */
+      var gesamt = meine.reduce(function(s, a){ return s + ((a.blob && a.blob.size) || 0); }, 0);
+      var o = sheetLeer('Aufnahmen mitschicken?',
+        meine.length + (meine.length === 1 ? ' Aufnahme. Sie macht' : ' Aufnahmen. Alle zusammen machen') + ' die Datei etwa ' + kb(gesamt * 1.37) +
+        ' gross. Ohne sie bleibt sie bei wenigen Kilobyte.');
+
+      var gewaehltAuf = {};
+      meine.forEach(function(a){
+        var teil = a.id.split(':');
+        var blockNr = parseInt(teil[1], 10);
+        var b = p.bloecke[blockNr];
+        var btn = sheetOpt(o, '○',
+          (b ? b.t : 'Baustein ' + (blockNr + 1)) + ' · ' + (teil[2] === 'du' ? 'deine Aufnahme' : 'Mentor'),
+          zeitFmt(a.dauer) + ' · ' + kb(((a.blob && a.blob.size) || 0) * 1.37));
+        btn.setAttribute('aria-pressed', 'false');
+        btn.addEventListener('click', function(){
+          var an = btn.getAttribute('aria-pressed') !== 'true';
+          btn.setAttribute('aria-pressed', an ? 'true' : 'false');
+          btn.querySelector('.ic').textContent = an ? '●' : '○';
+          if (an) gewaehltAuf[a.id] = a; else delete gewaehltAuf[a.id];
+        });
+      });
+
+      var los = document.createElement('button');
+      los.className = 'btn'; los.type = 'button'; los.textContent = 'Teilen';
+      los.addEventListener('click', function(){
+        $('sheet').hidden = true;
+        pitchTeilen(p, Object.keys(gewaehltAuf).map(function(k){ return gewaehltAuf[k]; }));
+      });
+      o.appendChild(los);
+      $('sheet').hidden = false;
+    });
   });
 
+  function pitchTeilen(p, aufnahmen){
+    var basis = { kwfabrik:1, typ:'pitch',
+      pitch:{ titel:p.titel, quelle:p.quelle, produkt:p.produkt || '', stand:p.stand || '', bloecke:p.bloecke } };
+    if (!aufnahmen.length){ teile(basis, p.titel, 'Pitch'); return; }
+    Promise.all(aufnahmen.map(function(a){
+      return blobNachText(a.blob).then(function(txt){
+        return { id:a.id.split(':').slice(1).join(':'), dauer:a.dauer, daten:txt };
+      });
+    })).then(function(liste){
+      basis.aufnahmen = liste;
+      teile(basis, p.titel, 'Pitch mit ' + liste.length + (liste.length === 1 ? ' Aufnahme' : ' Aufnahmen'));
+    }).catch(function(){
+      zeigeToast('Die Aufnahmen liessen sich nicht einpacken — der Pitch wird ohne sie geteilt.', null);
+      teile(basis, p.titel, 'Pitch');
+    });
+  }
   $('btnPackShare').addEventListener('click', function(){
     var txt = JSON.stringify(C, null, 2);
     var name = (C.name || 'inhalte').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '.kwf';
@@ -2199,12 +3003,17 @@ html,body{height:100%}
     });
   }
 
+  $('btnProfil').addEventListener('click', function(){
+    spI = 0; $('splash').hidden = false; splashZeichnen(); go('heute');
+  });
+
   restore();        // zuerst, sonst kennt setzeLektion() den gespeicherten Stand nicht
   ladeInhalt();
   wendeInhaltAn();
   renderBackup();
   speicherStatus();
   zeigeInstall();
+  splashPruefen();
 
   renderStats();
 })();

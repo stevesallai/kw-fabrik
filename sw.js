@@ -1,6 +1,6 @@
 /* KW Fabrik — Service Worker.
    Beim Ausrollen einer neuen Version VERSION hochzählen. Alles andere passiert von selbst. */
-const VERSION = 'kw-fabrik-v1';
+const VERSION = 'kw-fabrik-v2';
 
 const SHELL = [
   './',
